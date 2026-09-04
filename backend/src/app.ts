@@ -7,6 +7,7 @@ import { env } from './config/env.js';
 import { errorMiddleware } from './middlewares/error.middleware.js';
 import cookieParser from 'cookie-parser';
 import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/user.routes.js";
 
 const app: Application = express()
 
@@ -27,6 +28,7 @@ const apiLimiter = rateLimit({
 
 app.use('/api', apiLimiter)
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 app.get('/health', (_req, res) => res.status(200).json({success: true, message: "Server is healthy!" }))
 
