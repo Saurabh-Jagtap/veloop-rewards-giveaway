@@ -1,6 +1,10 @@
 services:
   mongodb:
-    image: mongo:8
+    build:
+      context: ./mongodb
+      dockerfile: Dockerfile
+
+    image: giveaway-mongodb:8
     container_name: giveaway-mongodb
     restart: unless-stopped
 
@@ -10,6 +14,16 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: adminpassword
+
+    command:
+      [
+        "mongod",
+        "--replSet",
+        "rs0",
+        "--bind_ip_all",
+        "--keyFile",
+        "/etc/mongodb-keyfile"
+      ]
 
     volumes:
       - mongodb_data:/data/db

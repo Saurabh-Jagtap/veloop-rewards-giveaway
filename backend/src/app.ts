@@ -5,6 +5,8 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { env } from './config/env.js';
 import { errorMiddleware } from './middlewares/error.middleware.js';
+import cookieParser from 'cookie-parser';
+import authRoutes from "./routes/auth.routes.js";
 
 const app: Application = express()
 
@@ -14,6 +16,7 @@ app.use(cors({
     credentials: true
 }))
 app.use(express.json({limit: '1mb'}))
+app.use(cookieParser());
 
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -23,8 +26,10 @@ const apiLimiter = rateLimit({
 })
 
 app.use('/api', apiLimiter)
+app.use("/api/auth", authRoutes);
 
 app.get('/health', (_req, res) => res.status(200).json({success: true, message: "Server is healthy!" }))
+
 
 app.use(errorMiddleware);
 

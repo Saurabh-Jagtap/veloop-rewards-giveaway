@@ -16,6 +16,12 @@ const userSchema = new Schema(
       trim: true,
     },
 
+    password: {
+      type: String,
+      required: true,
+      select: false,
+    },
+
     referralCode: {
       type: String,
       required: true,
