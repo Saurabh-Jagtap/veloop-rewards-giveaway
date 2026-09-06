@@ -3,6 +3,8 @@ import type { Request, Response, NextFunction } from "express";
 import { UserModel } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { WalletModel } from "../models/wallet.model.js";
+import type { GetMyParticipationsInput } from "../validators/user.validators.js";
+import { getMyParticipations } from "../services/user.services.js";
 
 export const getCurrentUserController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -51,6 +53,25 @@ export const getCurrentUserWalletController = async (req: Request, res: Response
                     xpBalance: wallet.xpBalance,
                 },
             },
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getMyParticipationsController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const { page, limit } = res.locals.validatedQuery as GetMyParticipationsInput;
+
+        const result = await getMyParticipations({
+            userId: req.user.id,
+            page,
+            limit,
+        });
+
+        res.status(200).json({
+            success: true,
+            data: result,
         });
     } catch (error) {
         next(error);
