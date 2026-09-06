@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import { createReferral, getMyReferrals } from "../services/referral.services.js";
+import { createReferral, getMyReferralMilestones, getMyReferrals } from "../services/referral.services.js";
 import type { GetMyReferralsInput } from "../validators/referral.validators.js";
 
 export const createReferralController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -20,7 +20,7 @@ export const createReferralController = async (req: Request, res: Response, next
     }
 };
 
-export const getMyReferralsController = async (req: Request,res: Response,next: NextFunction): Promise<void> => {
+export const getMyReferralsController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const { page, limit } = res.locals.validatedQuery as unknown as GetMyReferralsInput;
 
@@ -29,6 +29,19 @@ export const getMyReferralsController = async (req: Request,res: Response,next: 
             page,
             limit,
         });
+
+        res.status(200).json({
+            success: true,
+            data: result,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getMyReferralMilestonesController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const result = await getMyReferralMilestones(req.user.id);
 
         res.status(200).json({
             success: true,

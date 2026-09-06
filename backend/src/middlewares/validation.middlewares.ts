@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import type { ZodType } from "zod";
 
-type ValidationTarget = "body" | "query";
+type ValidationTarget = "body" | "query" | "params";
 
 export const validate = (schema: ZodType, target: ValidationTarget = "body") => {
     return (req: Request, res: Response, next: NextFunction): void => {
@@ -20,7 +20,11 @@ export const validate = (schema: ZodType, target: ValidationTarget = "body") => 
 
         if (target === "query") {
             res.locals.validatedQuery = result.data;
-        } else {
+        }
+        else if (target === "params") {
+            res.locals.validatedParams = result.data;
+        }
+        else {
             req.body = result.data;
         }
 

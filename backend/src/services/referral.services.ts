@@ -1,4 +1,7 @@
+import { AdWatchEventModel } from "../models/adwatchEvent.model.js";
 import { ReferralModel } from "../models/referral.model.js";
+import { ReferralMilestoneModel } from "../models/referralMilestone.model.js";
+import { ReferralMilestoneAchievementModel } from "../models/referralMilestoneAchievement.model.js";
 import { UserModel } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 
@@ -79,5 +82,52 @@ export const getMyReferrals = async ({ userId, page, limit }: GetMyReferralsInpu
             total,
             totalPages: Math.ceil(total / limit),
         },
+    };
+};
+
+export const getMyReferralMilestones = async (userId: string) => {
+    const referrals = await ReferralModel.find({ referrerId: userId }).lean();
+
+    const milestones = await ReferralMilestoneModel.find({ status: "ACTIVE" })
+        .sort({ requiredAds: 1 })
+        .lean();
+
+    const referralProgress = await Promise.all(
+        referrals.map(async (referral) => {
+            const verifiedAdWatches = await AdWatchEventModel.countDocuments({
+                referralId: referral._id,
+                status: "VERIFIED",
+            });
+
+            const achievements =
+                await ReferralMilestoneAchievementModel.find({
+                    referralId: referral._id,
+                }).lean();
+
+            const achievementMap = new Map(
+                achievements.map((achievement) => [
+                    achievement.milestoneId.toString(),
+                    achievement.status,
+                ]),
+            );
+
+            return {
+                referralId: referral._id.toString(),
+                referredUserId: referral.referredUserId.toString(),
+                verifiedAdWatches,
+                milestones: milestones.map((milestone) => ({
+                    milestoneId: milestone._id.toString(),
+                    name: milestone.name,
+                    requiredAds: milestone.requiredAds,
+                    status:
+                        achievementMap.get(milestone._id.toString()) ??
+                        "PENDING",
+                })),
+            };
+        }),
+    );
+
+    return {
+        referrals: referralProgress,
     };
 };
