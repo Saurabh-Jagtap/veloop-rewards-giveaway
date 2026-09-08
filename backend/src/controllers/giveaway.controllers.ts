@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
-import { getCurrentGiveaway, getGiveawayById, getGiveawayWinners, getMyGiveawayStatus, getPreviousGiveaways, getPreviousWinners } from "../services/giveaway.services.js";
+import { getCurrentGiveaway, getGiveawayById, getGiveawayWinners, getMyGiveawayStatus, getPreviousGiveaways, getPreviousWinners, joinGiveaway } from "../services/giveaway.services.js";
 import type { GetPreviousGiveawaysInput, GetPreviousWinnersInput, GiveawayIdParam } from "../validators/giveaway.validators.js";
+import crypto from "node:crypto";
 
 export const getCurrentGiveawayController = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -91,6 +92,32 @@ export const getPreviousWinnersController = async (req: Request, res: Response, 
         });
 
         res.status(200).json({
+            success: true,
+            data: result,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const joinGiveawayController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const { giveawayId } = res.locals.validatedParams as GiveawayIdParam;
+
+        const userId = req.user.id;
+
+        const userAgent = req.get("user-agent") ?? "unknown";
+        const ip = req.ip ?? "unknown";
+
+        const deviceHash = crypto.createHash("sha256").update(`${ip}:${userAgent}`).digest("hex");
+
+        const result = await joinGiveaway({
+            giveawayId,
+            userId,
+            deviceHash,
+        });
+
+        res.status(201).json({
             success: true,
             data: result,
         });

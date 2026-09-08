@@ -35,6 +35,14 @@ const userSchema = new Schema(
       enum: ["ACTIVE", "SUSPENDED", "BLOCKED"],
       default: "ACTIVE",
     },
+
+    role: {
+      type: String,
+      enum: ["USER", "ADMIN"],
+      default: "USER",
+      required: true,
+    },
+
   },
   {
     timestamps: true,
