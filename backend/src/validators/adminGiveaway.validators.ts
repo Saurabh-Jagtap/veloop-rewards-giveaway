@@ -85,8 +85,10 @@ export const getGiveawayParticipantsSchema = z.object({
     limit: z.coerce.number().int().min(1, "Limit must be at least 1").max(100, "Limit cannot exceed 100").default(20),
 });
 
+
 export type UpdateGiveawayInput = z.infer<typeof updateGiveawaySchema>;
 export type CreateGiveawayInput = z.infer<typeof createGiveawaySchema>;
 export type AttachPrizeToGiveawayInput = z.infer<typeof attachPrizeToGiveawaySchema>;
+export type GiveawayPrizeIdParams = z.infer<typeof giveawayPrizeIdParamsSchema>;
 export type UpdateGiveawayPrizeInput = z.infer<typeof updateGiveawayPrizeSchema>;
 export type GetGiveawayParticipantsInput = z.infer<typeof getGiveawayParticipantsSchema>;

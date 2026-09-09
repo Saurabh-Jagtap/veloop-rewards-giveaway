@@ -7,6 +7,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { randomInt } from "node:crypto";
 import mongoose from "mongoose";
 import type { AttachPrizeToGiveawayInput, CreateGiveawayInput, GetGiveawayParticipantsInput, UpdateGiveawayInput, UpdateGiveawayPrizeInput } from "../validators/adminGiveaway.validators.js";
+import { PrizeClaimModel } from "../models/prizeClaim.model.js";
 
 type PopulatedUser = {
     _id: string;
@@ -418,19 +419,11 @@ export const selectGiveawayWinners = async (giveawayId: string) => {
         .lean();
 
     if (!giveaway) {
-        throw new ApiError(
-            404,
-            "GIVEAWAY_NOT_FOUND",
-            "Giveaway not found",
-        );
+        throw new ApiError(404, "GIVEAWAY_NOT_FOUND", "Giveaway not found");
     }
 
     if (giveaway.status !== "ENDED") {
-        throw new ApiError(
-            400,
-            "GIVEAWAY_NOT_ENDED",
-            "Winners can only be selected after the giveaway has ended",
-        );
+        throw new ApiError(400, "GIVEAWAY_NOT_ENDED", "Winners can only be selected after the giveaway has ended");
     }
 
     /*
@@ -566,4 +559,112 @@ export const selectGiveawayWinners = async (giveawayId: string) => {
     } finally {
         await session.endSession();
     }
+};
+
+export const getGiveawayWinners = async (giveawayId: string) => {
+    const giveaway = await GiveawayModel.findById(giveawayId)
+        .select("_id")
+        .lean();
+
+    if (!giveaway) {
+        throw new ApiError(404, "GIVEAWAY_NOT_FOUND", "Giveaway not found");
+    }
+
+    const winners = await GiveawayWinnerModel.find({
+        giveawayId,
+    })
+        .sort({ selectedAt: 1 })
+        .populate<{ userId: PopulatedUser }>(
+            "userId",
+            "_id name email",
+        )
+        .populate<{ prizeId: PopulatedPrize }>(
+            "prizeId",
+            "_id name type",
+        )
+        .lean();
+
+    return {
+        winners: winners.map((winner) => ({
+            id: winner._id.toString(),
+
+            user: winner.userId
+                ? {
+                    id: winner.userId._id.toString(),
+                    name: winner.userId.name,
+                    email: winner.userId.email,
+                }
+                : null,
+
+            prize: winner.prizeId
+                ? {
+                    id: winner.prizeId._id.toString(),
+                    name: winner.prizeId.name,
+                    type: winner.prizeId.type,
+                }
+                : null,
+
+            selectionMethod: winner.selectionMethod,
+            status: winner.status,
+            selectedAt: winner.selectedAt,
+        })),
+    };
+};
+
+export const getGiveawayClaims = async (giveawayId: string) => {
+    const giveaway = await GiveawayModel.findById(giveawayId)
+        .select("_id")
+        .lean();
+
+    if (!giveaway) {
+        throw new ApiError(404, "GIVEAWAY_NOT_FOUND", "Giveaway not found");
+    }
+
+    const claims = await PrizeClaimModel.find({
+        giveawayId,
+    })
+        .sort({ createdAt: -1 })
+        .populate<{ userId: PopulatedUser }>(
+            "userId",
+            "_id name email",
+        )
+        .populate<{ prizeId: PopulatedPrize }>(
+            "prizeId",
+            "_id name type",
+        )
+        .lean();
+
+    return {
+        claims: claims.map((claim) => ({
+            id: claim._id.toString(),
+
+            user: claim.userId
+                ? {
+                    id: claim.userId._id.toString(),
+                    name: claim.userId.name,
+                    email: claim.userId.email,
+                }
+                : null,
+
+            prize: claim.prizeId
+                ? {
+                    id: claim.prizeId._id.toString(),
+                    name: claim.prizeId.name,
+                    type: claim.prizeId.type,
+                }
+                : null,
+
+            winnerId: claim.winnerId.toString(),
+
+            status: claim.status,
+
+            submittedAt: claim.submittedAt,
+            processedAt: claim.processedAt,
+            completedAt: claim.completedAt,
+            expiresAt: claim.expiresAt,
+
+            createdAt: claim.createdAt,
+            updatedAt: claim.updatedAt,
+        })),
+    };
 };

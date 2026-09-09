@@ -1,7 +1,8 @@
 import type { Request, Response, NextFunction } from "express";
 
-import { attachPrizeToGiveaway, createGiveaway, deleteGiveaway, endGiveaway, getGiveawayParticipants, selectGiveawayWinners, startGiveaway, updateGiveaway, updateGiveawayPrize } from "../services/adminGiveaway.services.js";
-import type { AttachPrizeToGiveawayInput, CreateGiveawayInput, GetGiveawayParticipantsInput, UpdateGiveawayInput, UpdateGiveawayPrizeInput } from "../validators/adminGiveaway.validators.js";
+import { attachPrizeToGiveaway, createGiveaway, deleteGiveaway, endGiveaway, getGiveawayClaims, getGiveawayParticipants, getGiveawayWinners, selectGiveawayWinners, startGiveaway, updateGiveaway, updateGiveawayPrize } from "../services/adminGiveaway.services.js";
+import type { AttachPrizeToGiveawayInput, CreateGiveawayInput, GetGiveawayParticipantsInput, GiveawayPrizeIdParams, UpdateGiveawayInput, UpdateGiveawayPrizeInput } from "../validators/adminGiveaway.validators.js";
+
 
 export const createGiveawayController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -109,10 +110,7 @@ export const attachPrizeToGiveawayController = async (req: Request, res: Respons
 
 export const updateGiveawayPrizeController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const { giveawayId, giveawayPrizeId } = res.locals.validatedParams as {
-            giveawayId: string;
-            giveawayPrizeId: string;
-        };
+        const { giveawayId, giveawayPrizeId } = res.locals.validatedParams as GiveawayPrizeIdParams;
 
         const input = req.body as UpdateGiveawayPrizeInput;
 
@@ -166,3 +164,38 @@ export const selectGiveawayWinnersController = async (req: Request, res: Respons
         next(error);
     }
 };
+
+export const getGiveawayWinnersController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const { giveawayId } = res.locals.validatedParams as {
+            giveawayId: string;
+        };
+
+        const result = await getGiveawayWinners(giveawayId);
+
+        res.status(200).json({
+            success: true,
+            data: result,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getGiveawayClaimsController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const { giveawayId } = res.locals.validatedParams as {
+            giveawayId: string;
+        };
+
+        const result = await getGiveawayClaims(giveawayId);
+
+        res.status(200).json({
+            success: true,
+            data: result,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
