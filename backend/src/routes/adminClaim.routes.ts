@@ -9,6 +9,6 @@ import { claimIdParamSchema } from "../validators/adminClaim.validators.js";
 const router = Router();
 
 router.post("/:claimId/process", authMiddleware, adminMiddleware, validate(claimIdParamSchema, "params"), processPrizeClaimController);
-router.post("/:claimId/complete",authMiddleware,adminMiddleware,validate(claimIdParamSchema, "params"),completePrizeClaimController);
+router.post("/:claimId/complete", authMiddleware, adminMiddleware, validate(claimIdParamSchema, "params"), completePrizeClaimController);
 
 export default router;

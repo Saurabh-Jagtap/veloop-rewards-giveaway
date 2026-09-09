@@ -23,8 +23,8 @@ router.patch("/:giveawayId/prizes/:giveawayPrizeId", authMiddleware, adminMiddle
 
 router.get("/:giveawayId/participants", authMiddleware, adminMiddleware, validate(giveawayIdParamSchema, "params"), validate(getGiveawayParticipantsSchema, "query"), getGiveawayParticipantsController);
 router.post("/:giveawayId/selectWinners", authMiddleware, adminMiddleware, validate(giveawayIdParamSchema, "params"), selectGiveawayWinnersController);
-router.get("/:giveawayId/winners", authMiddleware,adminMiddleware,validate(giveawayIdParamSchema, "params"),getGiveawayWinnersController);
+router.get("/:giveawayId/winners", authMiddleware, adminMiddleware, validate(giveawayIdParamSchema, "params"), getGiveawayWinnersController);
 
-router.get("/:giveawayId/claims",authMiddleware,adminMiddleware,validate(giveawayIdParamSchema, "params"),getGiveawayClaimsController);
+router.get("/:giveawayId/claims", authMiddleware, adminMiddleware, validate(giveawayIdParamSchema, "params"), getGiveawayClaimsController);
 
 export default router;
