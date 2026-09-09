@@ -44,5 +44,49 @@ export const updateGiveawaySchema = z.object({
         },
     );
 
+export const attachPrizeToGiveawaySchema = z.object({
+    prizeId: z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid prize ID"),
+
+    entryCurrency: z.string().trim().min(1, "Entry currency is required"),
+    entryAmount: z.coerce.number().min(0, "Entry amount cannot be negative"),
+
+    position: z.coerce.number().int().min(1, "Position must be at least 1"),
+    winnerCount: z.coerce.number().int().min(1, "Winner count must be at least 1"),
+});
+
+export const giveawayPrizeIdParamsSchema = z.object({
+    giveawayId: z.string().regex(
+        /^[0-9a-fA-F]{24}$/,
+        "Invalid giveaway ID",
+    ),
+
+    giveawayPrizeId: z.string().regex(
+        /^[0-9a-fA-F]{24}$/,
+        "Invalid giveaway prize ID",
+    ),
+});
+
+export const updateGiveawayPrizeSchema = z.object({
+    entryCurrency: z.string().trim().min(1, "Entry currency cannot be empty").optional(),
+    entryAmount: z.coerce.number().min(0, "Entry amount cannot be negative").optional(),
+
+    position: z.coerce.number().int().min(1, "Position must be at least 1").optional(),
+    winnerCount: z.coerce.number().int().min(1, "Winner count must be at least 1").optional(),
+})
+    .refine(
+        (data) => Object.keys(data).length > 0,
+        {
+            message: "At least one field must be provided",
+        },
+    );
+
+export const getGiveawayParticipantsSchema = z.object({
+    page: z.coerce.number().int().min(1, "Page must be at least 1").default(1),
+    limit: z.coerce.number().int().min(1, "Limit must be at least 1").max(100, "Limit cannot exceed 100").default(20),
+});
+
 export type UpdateGiveawayInput = z.infer<typeof updateGiveawaySchema>;
 export type CreateGiveawayInput = z.infer<typeof createGiveawaySchema>;
+export type AttachPrizeToGiveawayInput = z.infer<typeof attachPrizeToGiveawaySchema>;
+export type UpdateGiveawayPrizeInput = z.infer<typeof updateGiveawayPrizeSchema>;
+export type GetGiveawayParticipantsInput = z.infer<typeof getGiveawayParticipantsSchema>;

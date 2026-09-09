@@ -14,6 +14,7 @@ import referralMilestoneRoutes from "./routes/referralMilestone.routes.js";
 import rewardRoutes from "./routes/reward.routes.js";
 import giveawayRoutes from "./routes/giveaway.routes.js";
 import adminGiveawayRoutes from "./routes/adminGiveaway.routes.js";
+import adminPrizeRoutes from "./routes/adminPrize.routes.js";
 
 const app: Application = express()
 
@@ -42,6 +43,7 @@ app.use("/api/rewards", rewardRoutes);
 app.use("/api/giveaways", giveawayRoutes);
 
 app.use("/api/admin/giveaways", adminGiveawayRoutes);
+app.use("/api/admin/prizes", adminPrizeRoutes);
 
 app.get('/health', (_req, res) => res.status(200).json({ success: true, message: "Server is healthy!" }))
 

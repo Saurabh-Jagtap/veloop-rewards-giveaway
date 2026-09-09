@@ -44,6 +44,11 @@ const giveawayWinnerSchema = new Schema(
     },
 );
 
+giveawayWinnerSchema.index(
+    { giveawayId: 1, prizeId: 1, userId: 1 },
+    { unique: true },
+);
+
 export type GiveawayWinner = InferSchemaType<typeof giveawayWinnerSchema>;
 
 export const GiveawayWinnerModel = model("GiveawayWinner", giveawayWinnerSchema);
