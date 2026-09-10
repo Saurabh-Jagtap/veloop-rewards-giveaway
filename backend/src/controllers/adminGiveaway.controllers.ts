@@ -8,7 +8,7 @@ export const createGiveawayController = async (req: Request, res: Response, next
     try {
         const input = req.body as CreateGiveawayInput;
 
-        const result = await createGiveaway(input);
+        const result = await createGiveaway(input, req.user.id);
 
         res.status(201).json({
             success: true,
@@ -27,7 +27,7 @@ export const updateGiveawayController = async (req: Request, res: Response, next
 
         const input = req.body as UpdateGiveawayInput;
 
-        const result = await updateGiveaway(giveawayId, input);
+        const result = await updateGiveaway(giveawayId, input, req.user.id);
 
         res.status(200).json({
             success: true,
@@ -44,7 +44,7 @@ export const deleteGiveawayController = async (req: Request, res: Response, next
             giveawayId: string;
         };
 
-        const result = await deleteGiveaway(giveawayId);
+        const result = await deleteGiveaway(giveawayId, req.user.id);
 
         res.status(200).json({
             success: true,
@@ -61,7 +61,7 @@ export const startGiveawayController = async (req: Request, res: Response, next:
             giveawayId: string;
         };
 
-        const result = await startGiveaway(giveawayId);
+        const result = await startGiveaway(giveawayId, req.user.id);
 
         res.status(200).json({
             success: true,
@@ -78,7 +78,7 @@ export const endGiveawayController = async (req: Request, res: Response, next: N
             giveawayId: string;
         };
 
-        const result = await endGiveaway(giveawayId);
+        const result = await endGiveaway(giveawayId, req.user.id);
 
         res.status(200).json({
             success: true,
@@ -97,7 +97,7 @@ export const attachPrizeToGiveawayController = async (req: Request, res: Respons
 
         const input = req.body as AttachPrizeToGiveawayInput;
 
-        const result = await attachPrizeToGiveaway(giveawayId, input);
+        const result = await attachPrizeToGiveaway(giveawayId, input, req.user.id);
 
         res.status(201).json({
             success: true,
@@ -114,11 +114,7 @@ export const updateGiveawayPrizeController = async (req: Request, res: Response,
 
         const input = req.body as UpdateGiveawayPrizeInput;
 
-        const result = await updateGiveawayPrize(
-            giveawayId,
-            giveawayPrizeId,
-            input,
-        );
+        const result = await updateGiveawayPrize(giveawayId, giveawayPrizeId, input, req.user.id);
 
         res.status(200).json({
             success: true,
@@ -154,7 +150,7 @@ export const selectGiveawayWinnersController = async (req: Request, res: Respons
             giveawayId: string;
         };
 
-        const result = await selectGiveawayWinners(giveawayId);
+        const result = await selectGiveawayWinners(giveawayId, req.user.id);
 
         res.status(200).json({
             success: true,

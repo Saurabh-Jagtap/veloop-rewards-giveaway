@@ -53,6 +53,10 @@ const giveawaySchema = new Schema(
       type: String,
       required: true,
     },
+
+    winnersFinalizedAt: {
+      type: Date,
+    },
   },
   {
     timestamps: true,

@@ -1,7 +1,8 @@
 import { PrizeModel } from "../models/prize.model.js";
+import { createAuditLog } from "../utils/auditlog.js";
 import type { CreatePrizeInput } from "../validators/adminPrize.validators.js";
 
-export const createPrize = async (input: CreatePrizeInput) => {
+export const createPrize = async (input: CreatePrizeInput, userId: string) => {
     const prize = await PrizeModel.create({
         name: input.name,
         position: input.position,
@@ -10,6 +11,20 @@ export const createPrize = async (input: CreatePrizeInput) => {
         winnerCount: input.winnerCount,
         type: input.type,
         claimType: input.claimType,
+    });
+
+    await createAuditLog({
+        userId,
+        action: "CREATE_PRIZE",
+        result: "SUCCESS",
+        securityInfo: {
+            prizeId: prize._id.toString(),
+            name: prize.name,
+            position: prize.position,
+            winnerCount: prize.winnerCount,
+            type: prize.type,
+            claimType: prize.claimType,
+        },
     });
 
     return {

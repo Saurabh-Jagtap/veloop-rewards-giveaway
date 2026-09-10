@@ -8,6 +8,9 @@ import { randomInt } from "node:crypto";
 import mongoose from "mongoose";
 import type { AttachPrizeToGiveawayInput, CreateGiveawayInput, GetGiveawayParticipantsInput, UpdateGiveawayInput, UpdateGiveawayPrizeInput } from "../validators/adminGiveaway.validators.js";
 import { PrizeClaimModel } from "../models/prizeClaim.model.js";
+import { GiveawayEntryTransactionModel } from "../models/giveawayEntryTransaction.model.js";
+import { FraudEventModel } from "../models/fraudEvent.model.js";
+import { createAuditLog } from "../utils/auditlog.js";
 
 type PopulatedUser = {
     _id: string;
@@ -30,7 +33,7 @@ export const createGiveaway = async ({
     participationSettings,
     startAt,
     endAt,
-}: CreateGiveawayInput) => {
+}: CreateGiveawayInput, userId: string) => {
     const existingGiveaway = await GiveawayModel.findOne({ slug })
         .select("_id")
         .lean();
@@ -51,6 +54,17 @@ export const createGiveaway = async ({
         status: "UPCOMING",
     });
 
+    try {
+        await createAuditLog({
+            userId,
+            giveawayId: giveaway._id.toString(),
+            action: "CREATE_GIVEAWAY",
+            result: "SUCCESS",
+        });
+    } catch (error) {
+        console.error("Failed to create audit log:", error);
+    }
+
     return {
         giveaway: {
             id: giveaway._id.toString(),
@@ -69,7 +83,7 @@ export const createGiveaway = async ({
     };
 };
 
-export const updateGiveaway = async (giveawayId: string, input: UpdateGiveawayInput) => {
+export const updateGiveaway = async (giveawayId: string, input: UpdateGiveawayInput, userId: string,) => {
     const giveaway = await GiveawayModel.findById(giveawayId);
 
     if (!giveaway) {
@@ -99,6 +113,14 @@ export const updateGiveaway = async (giveawayId: string, input: UpdateGiveawayIn
 
     if (giveaway.status === "ENDED") {
         throw new ApiError(400, "GIVEAWAY_ENDED", "Ended giveaways cannot be updated");
+    }
+
+    const hasParticipation = await GiveawayParticipationModel.exists({
+        giveawayId,
+    });
+
+    if (hasParticipation && input.eligibility !== undefined) {
+        throw new ApiError(409, "GIVEAWAY_CONFIGURATION_LOCKED", "Eligibility cannot be changed after participation has started");
     }
 
     if (input.startAt) {
@@ -131,6 +153,13 @@ export const updateGiveaway = async (giveawayId: string, input: UpdateGiveawayIn
 
     await giveaway.save();
 
+    await createAuditLog({
+        userId,
+        giveawayId,
+        action: "UPDATE_GIVEAWAY",
+        result: "SUCCESS",
+    });
+
     return {
         giveaway: {
             id: giveaway._id.toString(),
@@ -149,7 +178,7 @@ export const updateGiveaway = async (giveawayId: string, input: UpdateGiveawayIn
     };
 };
 
-export const deleteGiveaway = async (giveawayId: string) => {
+export const deleteGiveaway = async (giveawayId: string, userId: string) => {
     const giveaway = await GiveawayModel.findById(giveawayId);
 
     if (!giveaway) {
@@ -160,7 +189,28 @@ export const deleteGiveaway = async (giveawayId: string) => {
         throw new ApiError(400, "GIVEAWAY_CANNOT_BE_DELETED", "Ended or archived giveaways cannot be deleted");
     }
 
+    const [hasParticipation, hasTransactions, hasWinners, hasClaims, hasFraudEvents] = await Promise.all([
+        GiveawayParticipationModel.exists({ giveawayId }),
+        GiveawayEntryTransactionModel.exists({ giveawayId }),
+        GiveawayWinnerModel.exists({ giveawayId }),
+        PrizeClaimModel.exists({ giveawayId }),
+        FraudEventModel.exists({ giveawayId }),
+    ]);
+
+    if (hasParticipation || hasTransactions || hasWinners || hasClaims || hasFraudEvents) {
+        throw new ApiError(409, "GIVEAWAY_HAS_HISTORY", "Giveaway cannot be deleted because it has historical records");
+    }
+
     await GiveawayModel.deleteOne({ _id: giveawayId });
+
+    await createAuditLog({
+        userId,
+        action: "DELETE_GIVEAWAY",
+        result: "SUCCESS",
+        securityInfo: {
+            targetGiveawayId: giveawayId,
+        },
+    });
 
     return {
         giveawayId,
@@ -168,7 +218,7 @@ export const deleteGiveaway = async (giveawayId: string) => {
     };
 };
 
-export const startGiveaway = async (giveawayId: string) => {
+export const startGiveaway = async (giveawayId: string, userId: string) => {
     const giveaway = await GiveawayModel.findById(giveawayId);
 
     if (!giveaway) {
@@ -186,6 +236,13 @@ export const startGiveaway = async (giveawayId: string) => {
 
     await giveaway.save();
 
+    await createAuditLog({
+        userId,
+        giveawayId,
+        action: "START_GIVEAWAY",
+        result: "SUCCESS",
+    });
+
     return {
         giveaway: {
             id: giveaway._id.toString(),
@@ -204,7 +261,7 @@ export const startGiveaway = async (giveawayId: string) => {
     };
 };
 
-export const endGiveaway = async (giveawayId: string) => {
+export const endGiveaway = async (giveawayId: string, userId: string) => {
     const giveaway = await GiveawayModel.findById(giveawayId);
 
     if (!giveaway) {
@@ -219,6 +276,13 @@ export const endGiveaway = async (giveawayId: string) => {
 
     await giveaway.save();
 
+    await createAuditLog({
+        userId,
+        giveawayId,
+        action: "END_GIVEAWAY",
+        result: "SUCCESS",
+    });
+
     return {
         giveaway: {
             id: giveaway._id.toString(),
@@ -237,7 +301,7 @@ export const endGiveaway = async (giveawayId: string) => {
     };
 };
 
-export const attachPrizeToGiveaway = async (giveawayId: string, input: AttachPrizeToGiveawayInput) => {
+export const attachPrizeToGiveaway = async (giveawayId: string, input: AttachPrizeToGiveawayInput, userId: string) => {
     const giveaway = await GiveawayModel.findById(giveawayId)
         .select("_id status")
         .lean();
@@ -275,6 +339,21 @@ export const attachPrizeToGiveaway = async (giveawayId: string, input: AttachPri
         winnerCount: input.winnerCount,
     });
 
+    await createAuditLog({
+        userId,
+        giveawayId,
+        action: "ATTACH_PRIZE",
+        result: "SUCCESS",
+        securityInfo: {
+            giveawayPrizeId: giveawayPrize._id.toString(),
+            prizeId: giveawayPrize.prizeId.toString(),
+            entryCurrency: giveawayPrize.entryCurrency,
+            entryAmount: giveawayPrize.entryAmount,
+            position: giveawayPrize.position,
+            winnerCount: giveawayPrize.winnerCount,
+        },
+    });
+
     return {
         giveawayPrize: {
             id: giveawayPrize._id.toString(),
@@ -291,7 +370,7 @@ export const attachPrizeToGiveaway = async (giveawayId: string, input: AttachPri
 };
 
 export const updateGiveawayPrize = async (giveawayId: string, giveawayPrizeId: string,
-    input: UpdateGiveawayPrizeInput) => {
+    input: UpdateGiveawayPrizeInput, userId: string) => {
     const giveaway = await GiveawayModel.findById(giveawayId)
         .select("_id status")
         .lean();
@@ -330,6 +409,21 @@ export const updateGiveawayPrize = async (giveawayId: string, giveawayPrizeId: s
     }
 
     await giveawayPrize.save();
+
+    await createAuditLog({
+        userId,
+        giveawayId,
+        action: "UPDATE_GIVEAWAY_PRIZE",
+        securityInfo: {
+            giveawayPrizeId,
+            prizeId: giveawayPrize.prizeId.toString(),
+            entryCurrency: giveawayPrize.entryCurrency,
+            entryAmount: giveawayPrize.entryAmount,
+            position: giveawayPrize.position,
+            winnerCount: giveawayPrize.winnerCount,
+        },
+        result: "SUCCESS",
+    });
 
     return {
         giveawayPrize: {
@@ -413,9 +507,9 @@ export const getGiveawayParticipants = async (
     };
 };
 
-export const selectGiveawayWinners = async (giveawayId: string) => {
+export const selectGiveawayWinners = async (giveawayId: string, userId: string) => {
     const giveaway = await GiveawayModel.findById(giveawayId)
-        .select("_id status")
+        .select("_id status winnersFinalizedAt")
         .lean();
 
     if (!giveaway) {
@@ -426,135 +520,167 @@ export const selectGiveawayWinners = async (giveawayId: string) => {
         throw new ApiError(400, "GIVEAWAY_NOT_ENDED", "Winners can only be selected after the giveaway has ended");
     }
 
-    /*
-     * If winners already exist, the selection has already been finalized.
-     *
-     * We return the existing winners instead of selecting a new set.
-     * This makes retries idempotent.
-     */
-    const existingWinners = await GiveawayWinnerModel.find({
-        giveawayId,
-    })
-        .sort({ prizeId: 1, selectedAt: 1 })
-        .lean();
-
-    if (existingWinners.length > 0) {
-        return {
-            finalized: true,
-            winners: existingWinners.map((winner) => ({
-                id: winner._id.toString(),
-                userId: winner.userId.toString(),
-                giveawayId: winner.giveawayId.toString(),
-                prizeId: winner.prizeId.toString(),
-                selectionMethod: winner.selectionMethod,
-                status: winner.status,
-                selectedAt: winner.selectedAt,
-            })),
-        };
-    }
-
     const session = await mongoose.startSession();
 
     try {
-        session.startTransaction();
+        const result = await session.withTransaction(async () => {
+            /*
+             * Atomically claim winner finalization.
+             *
+             * Only the first request can change winnersFinalizedAt
+             * from "not finalized" to a timestamp.
+             *
+             * Concurrent requests that lose this race will retry
+             * their transaction and then see the finalized giveaway.
+             */
+            const finalizedGiveaway = await GiveawayModel.findOneAndUpdate(
+                {
+                    _id: giveawayId,
+                    status: "ENDED",
+                    winnersFinalizedAt: {
+                        $exists: false,
+                    },
+                },
+                {
+                    $set: {
+                        winnersFinalizedAt: new Date(),
+                    },
+                },
+                {
+                    new: true,
+                    session,
+                },
+            ).lean();
 
-        const giveawayPrizes = await GiveawayPrizeModel.find({
-            giveawayId,
-        })
-            .sort({ position: 1 })
-            .lean()
-            .session(session);
+            if (!finalizedGiveaway) {
+                const existingWinners = await GiveawayWinnerModel.find({
+                    giveawayId,
+                })
+                    .sort({ prizeId: 1, selectedAt: 1 })
+                    .lean()
+                    .session(session);
 
-        if (giveawayPrizes.length === 0) {
-            throw new ApiError(
-                400,
-                "NO_PRIZES_CONFIGURED",
-                "No prizes are configured for this giveaway",
-            );
-        }
+                if (existingWinners.length === 0) {
+                    throw new ApiError(500, "WINNER_FINALIZATION_INCONSISTENT", "Winner selection is marked as finalized but no winners were found");
+                }
 
-        const selectedWinners = [];
+                return {
+                    finalized: true,
+                    winners: existingWinners.map((winner) => ({
+                        id: winner._id.toString(),
+                        userId: winner.userId.toString(),
+                        giveawayId: winner.giveawayId.toString(),
+                        prizeId: winner.prizeId.toString(),
+                        selectionMethod: winner.selectionMethod,
+                        status: winner.status,
+                        selectedAt: winner.selectedAt,
+                    })),
+                };
+            }
 
-        for (const giveawayPrize of giveawayPrizes) {
-            const participants = await GiveawayParticipationModel.find({
+            const giveawayPrizes = await GiveawayPrizeModel.find({
                 giveawayId,
-                prizeId: giveawayPrize.prizeId,
-                status: "ACTIVE",
             })
-                .select("userId")
+                .sort({ position: 1 })
                 .lean()
                 .session(session);
 
-            if (participants.length < giveawayPrize.winnerCount) {
-                throw new ApiError(400, "INSUFFICIENT_PARTICIPANTS", `Not enough participants for prize ${giveawayPrize.prizeId.toString()}`);
+            if (giveawayPrizes.length === 0) {
+                throw new ApiError(400, "NO_PRIZES_CONFIGURED", "No prizes are configured for this giveaway");
             }
 
-            // Fisher-Yates shuffle using cryptographically secure random integers.
+            const selectedWinners = [];
 
-            const shuffledParticipants = [...participants];
+            for (const giveawayPrize of giveawayPrizes) {
+                const participants =
+                    await GiveawayParticipationModel.find({
+                        giveawayId,
+                        prizeId: giveawayPrize.prizeId,
+                        status: "ACTIVE",
+                    })
+                        .select("userId")
+                        .lean()
+                        .session(session);
 
-            for (
-                let currentIndex = shuffledParticipants.length - 1;
-                currentIndex > 0;
-                currentIndex--
-            ) {
-                const randomIndex = randomInt(currentIndex + 1);
-
-                const currentParticipant = shuffledParticipants[currentIndex];
-                const randomParticipant = shuffledParticipants[randomIndex];
-
-                if (!currentParticipant || !randomParticipant) {
-                    throw new ApiError(500, "WINNER_SELECTION_ERROR", "Unable to shuffle participants");
+                if (participants.length < giveawayPrize.winnerCount) {
+                    throw new ApiError(400, "INSUFFICIENT_PARTICIPANTS", `Not enough participants for prize ${giveawayPrize.prizeId.toString()}`);
                 }
 
-                shuffledParticipants[currentIndex] = randomParticipant;
-                shuffledParticipants[randomIndex] = currentParticipant;
+                const shuffledParticipants = [...participants];
+
+                for (
+                    let currentIndex = shuffledParticipants.length - 1;
+                    currentIndex > 0;
+                    currentIndex--
+                ) {
+                    const randomIndex = randomInt(currentIndex + 1);
+
+                    const currentParticipant = shuffledParticipants[currentIndex];
+
+                    const randomParticipant = shuffledParticipants[randomIndex];
+
+                    if (!currentParticipant || !randomParticipant) {
+                        throw new ApiError(500, "WINNER_SELECTION_ERROR", "Unable to shuffle participants");
+                    }
+
+                    shuffledParticipants[currentIndex] = randomParticipant;
+                    shuffledParticipants[randomIndex] = currentParticipant;
+                }
+
+                const winnersForPrize = shuffledParticipants.slice(
+                    0,
+                    giveawayPrize.winnerCount,
+                );
+
+                for (const participant of winnersForPrize) {
+                    selectedWinners.push({
+                        userId: participant.userId,
+                        giveawayId,
+                        prizeId: giveawayPrize.prizeId,
+                        selectionMethod: "RANDOM" as const,
+                        status: "SELECTED" as const,
+                        selectedAt: new Date(),
+                    });
+                }
             }
 
-            const winnersForPrize = shuffledParticipants.slice(
-                0,
-                giveawayPrize.winnerCount,
+            if (selectedWinners.length === 0) {
+                throw new ApiError(400, "NO_WINNERS_SELECTED", "No winners could be selected");
+            }
+
+            await GiveawayWinnerModel.insertMany(
+                selectedWinners,
+                {
+                    session,
+                    ordered: true,
+                },
             );
 
-            for (const participant of winnersForPrize) {
-                selectedWinners.push({
-                    userId: participant.userId,
-                    giveawayId: giveawayId,
-                    prizeId: giveawayPrize.prizeId,
-                    selectionMethod: "RANDOM" as const,
-                    status: "SELECTED" as const,
-                    selectedAt: new Date(),
-                });
-            }
-        }
+            return {
+                finalized: true,
+                winners: selectedWinners.map((winner) => ({
+                    userId: winner.userId.toString(),
+                    giveawayId: winner.giveawayId.toString(),
+                    prizeId: winner.prizeId.toString(),
+                    selectionMethod: winner.selectionMethod,
+                    status: winner.status,
+                    selectedAt: winner.selectedAt,
+                })),
+            };
+        });
 
-        if (selectedWinners.length === 0) {
-            throw new ApiError(400, "NO_WINNERS_SELECTED", "No winners could be selected");
-        }
-
-        await GiveawayWinnerModel.insertMany(
-            selectedWinners,
-            {
-                session,
-                ordered: true,
+        await createAuditLog({
+            userId,
+            giveawayId,
+            action: "WINNERS_SELECTED",
+            result: "SUCCESS",
+            securityInfo: {
+                winnerCount: result.winners.length,
             },
-        );
+        });
 
-        await session.commitTransaction();
-
-        return {
-            finalized: true,
-            winners: selectedWinners.map((winner) => ({
-                userId: winner.userId.toString(),
-                giveawayId: winner.giveawayId.toString(),
-                prizeId: winner.prizeId.toString(),
-                selectionMethod: winner.selectionMethod,
-                status: winner.status,
-                selectedAt: winner.selectedAt,
-            })),
-        };
+        return result;
     } catch (error) {
-        await session.abortTransaction();
         throw error;
     } finally {
         await session.endSession();

@@ -7,7 +7,7 @@ export const processPrizeClaimController = async (req: Request, res: Response, n
     try {
         const { claimId } = res.locals.validatedParams as ClaimIdParam;
 
-        const result = await processPrizeClaim(claimId);
+        const result = await processPrizeClaim(claimId, req.user.id);
 
         res.status(200).json({
             success: true,
@@ -22,7 +22,7 @@ export const completePrizeClaimController = async (req: Request, res: Response, 
     try {
         const { claimId } = res.locals.validatedParams as ClaimIdParam;
 
-        const result = await completePrizeClaim(claimId);
+        const result = await completePrizeClaim(claimId, req.user.id);
 
         res.status(200).json({
             success: true,

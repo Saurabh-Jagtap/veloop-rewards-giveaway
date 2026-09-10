@@ -7,7 +7,7 @@ export const createPrizeController = async (req: Request, res: Response, next: N
     try {
         const input = req.body as CreatePrizeInput;
 
-        const result = await createPrize(input);
+        const result = await createPrize(input, req.user.id);
 
         res.status(201).json({
             success: true,
