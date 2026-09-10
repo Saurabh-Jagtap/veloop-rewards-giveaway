@@ -6,6 +6,12 @@ declare global {
             user: {
                 id: string;
             };
+            requestId: string;
+            auditContext?: {
+                action: string;
+                giveawayId?: string;
+                referralId?: string;
+            };
         }
     }
 }

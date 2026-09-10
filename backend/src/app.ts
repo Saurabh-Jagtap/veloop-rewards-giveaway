@@ -16,9 +16,11 @@ import giveawayRoutes from "./routes/giveaway.routes.js";
 import adminGiveawayRoutes from "./routes/adminGiveaway.routes.js";
 import adminPrizeRoutes from "./routes/adminPrize.routes.js";
 import adminClaimRoutes from "./routes/adminClaim.routes.js";
+import { requestIdMiddleware } from "./middlewares/requestId.middleware.js";
 
 const app: Application = express()
 
+app.use(requestIdMiddleware);
 app.use(helmet())
 app.use(cors({
     origin: env.CLIENT_URL,
