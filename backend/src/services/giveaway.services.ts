@@ -7,8 +7,9 @@ import { PrizeModel } from "../models/prize.model.js";
 import { UserModel } from "../models/user.model.js";
 import { WalletModel } from "../models/wallet.model.js";
 import { ApiError } from "../utils/ApiError.js";
-import type { GetPreviousGiveawaysInput, GetPreviousWinnersInput } from "../validators/giveaway.validators.js";
+import type { GetPreviousGiveawaysInput, GetPreviousWinnersInput, SubmitGiveawayClaimInput } from "../validators/giveaway.validators.js";
 import { GiveawayEntryTransactionModel } from "../models/giveawayEntryTransaction.model.js";
+import { PrizeClaimModel } from "../models/prizeClaim.model.js";
 
 export const getCurrentGiveaway = async () => {
     const now = new Date();
@@ -734,4 +735,173 @@ const getInsufficientBalanceCode = (currency: string): string => {
         default:
             return "INSUFFICIENT_BALANCE";
     }
+};
+
+export const submitGiveawayClaim = async ({ giveawayId, userId, claimData }: {
+    giveawayId: string;
+    userId: string;
+    claimData: SubmitGiveawayClaimInput;
+}) => {
+    // 1. Verify giveaway exists
+    const giveaway = await GiveawayModel.findById(giveawayId)
+        .select("_id")
+        .lean();
+
+    if (!giveaway) {
+        throw new ApiError(404, "GIVEAWAY_NOT_FOUND", "Giveaway not found");
+    }
+
+    // 2. Find the authenticated user's selected winner record
+    const winner = await GiveawayWinnerModel.findOne({
+        giveawayId,
+        userId,
+        status: "SELECTED",
+    }).lean();
+
+    if (!winner) {
+        throw new ApiError(403, "CLAIM_NOT_ALLOWED", "You are not a winner of this giveaway");
+    }
+
+    // 3. Load the prize from the database
+    const prize = await PrizeModel.findById(winner.prizeId)
+        .select("_id name type claimType")
+        .lean();
+
+    if (!prize) {
+        throw new ApiError(500, "PRIZE_NOT_FOUND", "Winner prize configuration is invalid");
+    }
+
+    // 4. Validate claim data according to the authoritative prize type
+    let validatedClaimData: Record<string, string>;
+
+    if (prize.type === "PHYSICAL") {
+        const requiredFields = ["name", "phone", "address", "city", "state", "pin"] as const;
+
+        const missingFields = requiredFields.filter((field) => !claimData[field]);
+
+        if (missingFields.length > 0) {
+            throw new ApiError(400, "INVALID_CLAIM_DATA", `Missing required claim information: ${missingFields.join(", ")}`);
+        }
+
+        validatedClaimData = {
+            name: claimData.name!,
+            phone: claimData.phone!,
+            address: claimData.address!,
+            city: claimData.city!,
+            state: claimData.state!,
+            pin: claimData.pin!,
+        };
+    } else if (prize.type === "GIFT_CARD") {
+        if (!claimData.email) {
+            throw new ApiError(400, "INVALID_CLAIM_DATA", "Email is required for gift card claims");
+        }
+
+        validatedClaimData = {
+            email: claimData.email,
+        };
+    } else if (prize.type === "DIGITAL") {
+        validatedClaimData = {};
+    } else {
+        throw new ApiError(500, "PRIZE_CONFIGURATION_INVALID", "Prize type is not supported");
+    }
+
+    // 5. Prevent duplicate claim submission
+    const existingClaim = await PrizeClaimModel.findOne({ winnerId: winner._id }).lean();
+
+    if (existingClaim) {
+        throw new ApiError(409, "CLAIM_ALREADY_SUBMITTED", "A claim has already been submitted for this prize");
+    }
+
+    // 6. Create the claim
+    const submittedAt = new Date();
+
+    const claim = await PrizeClaimModel.create({
+        userId,
+        giveawayId,
+        prizeId: winner.prizeId,
+        winnerId: winner._id,
+        claimData: validatedClaimData,
+        status: "SUBMITTED",
+        submittedAt,
+    });
+
+    return {
+        claim: {
+            id: claim._id.toString(),
+            giveawayId: claim.giveawayId.toString(),
+            prizeId: claim.prizeId.toString(),
+            winnerId: claim.winnerId.toString(),
+            status: claim.status,
+            submittedAt: claim.submittedAt,
+        },
+        prize: {
+            id: prize._id.toString(),
+            name: prize.name,
+            type: prize.type,
+            claimType: prize.claimType,
+        },
+    };
+};
+
+export const getMyGiveawayClaim = async ({ giveawayId, userId }: {
+    giveawayId: string;
+    userId: string;
+}) => {
+    // 1. Verify giveaway exists
+    const giveaway = await GiveawayModel.findById(giveawayId)
+        .select("_id")
+        .lean();
+
+    if (!giveaway) {
+        throw new ApiError(404, "GIVEAWAY_NOT_FOUND", "Giveaway not found");
+    }
+
+    // 2. Find the user's selected winner
+    const winner = await GiveawayWinnerModel.findOne({
+        giveawayId,
+        userId,
+        status: "SELECTED",
+    })
+        .select("_id prizeId status selectedAt")
+        .lean();
+
+    // User is not a winner
+    if (!winner) {
+        throw new ApiError(403, "CLAIM_NOT_ALLOWED", "You are not a winner of this giveaway");
+    }
+
+    // 3. Find the claim belonging to this winner
+    const claim = await PrizeClaimModel.findOne({
+        winnerId: winner._id,
+        userId,
+        giveawayId,
+    }).lean();
+
+    // Winner but hasn't submitted a claim yet
+    if (!claim) {
+        return {
+            claim: null,
+            winner: {
+                id: winner._id.toString(),
+                prizeId: winner.prizeId.toString(),
+                status: winner.status,
+                selectedAt: winner.selectedAt,
+            },
+        };
+    }
+
+    // 4. Return only safe claim information
+    return {
+        claim: {
+            id: claim._id.toString(),
+            giveawayId: claim.giveawayId.toString(),
+            prizeId: claim.prizeId.toString(),
+            winnerId: claim.winnerId.toString(),
+            status: claim.status,
+            submittedAt: claim.submittedAt,
+            processedAt: claim.processedAt,
+            completedAt: claim.completedAt,
+            expiresAt: claim.expiresAt,
+        },
+    };
 };
