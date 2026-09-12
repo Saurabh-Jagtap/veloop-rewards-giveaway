@@ -1,0 +1,107 @@
+.header {
+  position: relative;
+  z-index: 10;
+
+  border-bottom: 1px solid var(--color-border);
+
+  background: rgba(255, 255, 255, 0.9);
+
+  backdrop-filter: blur(12px);
+}
+
+.navbar {
+  width: min(
+    calc(100% - 32px),
+    var(--container-max-width)
+  );
+
+  min-height: 72px;
+  margin-inline: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  color: var(--color-text);
+
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.logoMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 10px;
+
+  color: white;
+  background: var(--color-primary);
+}
+
+.logo small {
+  display: block;
+
+  margin-top: 1px;
+
+  color: var(--color-text-muted);
+
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+
+  color: var(--color-text-secondary);
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.navLinks a {
+  transition: color var(--transition-fast);
+}
+
+.navLinks a:hover {
+  color: var(--color-text);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 767px) {
+  .navbar {
+    min-height: 64px;
+  }
+
+  .navLinks {
+    display: none;
+  }
+
+  .actions button:first-child {
+    display: none;
+  }
+
+  .actions button:last-child {
+    min-height: 38px;
+  }
+}

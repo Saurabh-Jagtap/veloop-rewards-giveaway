@@ -1,0 +1,159 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+
+  padding: 72px 0 80px;
+
+  background:
+    radial-gradient(
+      circle at 80% 40%,
+      rgba(99, 91, 255, 0.12),
+      transparent 35%
+    ),
+    var(--color-background-soft);
+}
+
+.heroContent {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  align-items: center;
+  gap: 64px;
+
+  min-height: 480px;
+}
+
+.heroCopy {
+  max-width: 600px;
+}
+
+.heroTitle {
+  margin: 20px 0 0;
+
+  font-size: clamp(48px, 6vw, 76px);
+  font-weight: 750;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.heroTitle span {
+  display: block;
+  color: var(--color-primary);
+}
+
+.heroDescription {
+  max-width: 520px;
+  margin: 24px 0 0;
+
+  color: var(--color-text-secondary);
+
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-top: 32px;
+}
+
+.heroVisual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 400px;
+}
+
+.rewardOrb {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 300px;
+  height: 300px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      rgba(255, 255, 255, 0.9),
+      transparent 30%
+    ),
+    linear-gradient(
+      145deg,
+      #817aff,
+      #4e46d9
+    );
+
+  box-shadow:
+    0 30px 80px rgba(99, 91, 255, 0.28);
+
+  transform: rotate(-8deg);
+}
+
+.rewardOrb span {
+  color: white;
+
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.placeholderSection {
+  padding: 80px 0;
+}
+
+.placeholderSection h2 {
+  margin: 0;
+
+  font-size: 36px;
+  letter-spacing: -0.03em;
+}
+
+@media (max-width: 767px) {
+  .hero {
+    padding: 48px 0 56px;
+  }
+
+  .heroContent {
+    grid-template-columns: 1fr;
+    gap: 40px;
+
+    min-height: auto;
+  }
+
+  .heroTitle {
+    font-size: clamp(42px, 13vw, 60px);
+  }
+
+  .heroDescription {
+    font-size: 16px;
+  }
+
+  .heroActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .heroVisual {
+    min-height: 280px;
+  }
+
+  .rewardOrb {
+    width: 220px;
+    height: 220px;
+  }
+
+  .rewardOrb span {
+    font-size: 17px;
+  }
+
+  .placeholderSection {
+    padding: 56px 0;
+  }
+}

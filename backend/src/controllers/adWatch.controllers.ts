@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
-import type { CreateAdWatchInput, GetMyAdWatchesInput } from "../validators/adwatch.validators.js";
-import { createAdWatch, getMyAdWatches } from "../services/adwatch.services.js";
+import type { CreateAdWatchInput, GetMyAdWatchesInput } from "../validators/adWatch.validators.js";
+import { createAdWatch, getMyAdWatches } from "../services/adWatch.services.js";
 
 export const createAdWatchController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
