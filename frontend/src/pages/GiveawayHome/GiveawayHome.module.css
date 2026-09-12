@@ -1,159 +1,916 @@
-.hero {
-  position: relative;
-  overflow: hidden;
-
-  padding: 72px 0 80px;
-
-  background:
-    radial-gradient(
-      circle at 80% 40%,
-      rgba(99, 91, 255, 0.12),
-      transparent 35%
-    ),
-    var(--color-background-soft);
+.page {
+    min-height: 100vh;
+    background: #030518;
+    color: #ffffff;
 }
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+    position: relative;
+
+    height: 620px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            ellipse 650px 520px at 75% 48%,
+            rgba(119, 31, 255, 0.2),
+            transparent 68%
+        ),
+        radial-gradient(
+            ellipse 500px 400px at 45% 100%,
+            rgba(49, 35, 146, 0.1),
+            transparent 70%
+        ),
+        #030518;
+}
+
+.hero::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 1px;
+
+    background: rgba(90, 91, 139, 0.13);
+}
+
+/* =========================================
+   HERO CONTENT
+========================================= */
 
 .heroContent {
-  display: grid;
-  grid-template-columns: 1fr 0.9fr;
-  align-items: center;
-  gap: 64px;
+    position: relative;
+    z-index: 1;
 
-  min-height: 480px;
+    display: grid;
+
+    grid-template-columns: 46% 54%;
+
+    height: 620px;
 }
+
+.heroContainer {
+    width: 100%;
+    max-width: 1540px;
+    margin: 0 auto;
+    padding: 0 78px;
+}
+
+/* =========================================
+   LEFT SIDE
+========================================= */
 
 .heroCopy {
-  max-width: 600px;
+    position: relative;
+    z-index: 5;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding-left: 0;
+    padding-bottom: 100px;
 }
 
-.heroTitle {
-  margin: 20px 0 0;
+/* =========================================
+   BADGE
+========================================= */
 
-  font-size: clamp(48px, 6vw, 76px);
-  font-weight: 750;
-  letter-spacing: -0.055em;
-  line-height: 0.98;
+.heroBadge {
+    width: fit-content;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    height: 34px;
+
+    padding: 0 14px;
+
+    border: 1px solid rgba(135, 45, 255, 0.95);
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(125, 26, 255, 0.15),
+            rgba(53, 70, 255, 0.08)
+        );
+
+    color: #f2ecff;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    letter-spacing: 0;
+
+    box-shadow:
+        inset 0 0 12px rgba(144, 48, 255, 0.04),
+        0 0 12px rgba(112, 38, 255, 0.05);
+}
+
+.heroBadgeStar {
+    color: #ffd42f;
+
+    font-size: 15px;
+    line-height: 1;
+}
+
+/* =========================================
+   HEADING
+========================================= */
+
+.heroTitle {
+    margin: 24px 0 20px;
+
+    max-width: 690px;
+
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 60px;
+    font-weight: 800;
+
+    line-height: 0.99;
+
+    letter-spacing: -0.043em;
+
+    color: #f8f8fb;
 }
 
 .heroTitle span {
-  display: block;
-  color: var(--color-primary);
+    background:
+        linear-gradient(
+            100deg,
+            #a72cff 0%,
+            #c13dff 48%,
+            #8d38ff 100%
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+    color: transparent;
 }
+
+/* =========================================
+   DESCRIPTION
+========================================= */
 
 .heroDescription {
-  max-width: 520px;
-  margin: 24px 0 0;
+    margin: 0;
 
-  color: var(--color-text-secondary);
+    max-width: 650px;
 
-  font-size: 18px;
-  line-height: 1.6;
+    color: #b8bac9;
+
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 16px;
+    font-weight: 400;
+
+    line-height: 1.6;
+
+    letter-spacing: -0.008em;
 }
+
+/* =========================================
+   ACTIONS
+========================================= */
 
 .heroActions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+    display: flex;
+    align-items: center;
 
-  margin-top: 32px;
+    gap: 45px;
+
+    margin-top: 30px;
 }
 
-.heroVisual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.heroActions button:first-child {
+    min-width: 402px;
 
-  min-height: 400px;
+    height: 58px;
+
+    padding: 0 27px;
+
+    border-radius: 10px;
+
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 16px;
+    font-weight: 600;
 }
 
-.rewardOrb {
-  position: relative;
+.heroActions button:first-child svg {
+    margin-left: 8px;
+}
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Secondary CTA */
 
-  width: 300px;
-  height: 300px;
+.learnButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
 
-  border-radius: 50%;
+    padding: 0;
 
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      rgba(255, 255, 255, 0.9),
-      transparent 30%
-    ),
-    linear-gradient(
-      145deg,
-      #817aff,
-      #4e46d9
+    border: 0;
+
+    background: transparent;
+
+    color: #f0f0f5;
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition:
+        color 160ms ease,
+        transform 160ms ease;
+}
+
+.learnButton:hover {
+    color: #c45cff;
+}
+
+.learnButton:hover svg {
+    transform: translateX(3px);
+}
+
+.learnButton:focus-visible {
+    outline: 2px solid #ad32ff;
+    outline-offset: 6px;
+    border-radius: 4px;
+}
+
+.exploreButton {
+    background:
+        linear-gradient(
+            105deg,
+            #8c39ff 0%,
+            #7138ff 48%,
+            #4d29ff 100%
+        );
+
+    color: #ffffff;
+
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 20px rgba(85, 38, 255, 0.2);
+
+    transition:
+        transform 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.exploreButton:hover:not(:disabled) {
+    background: linear-gradient(
+        105deg,
+        #8c39ff 0%,
+        #7138ff 48%,
+        #4d29ff 100%
     );
 
-  box-shadow:
-    0 30px 80px rgba(99, 91, 255, 0.28);
+    transform: translateY(-1px);
 
-  transform: rotate(-8deg);
+    box-shadow:
+        0 11px 30px rgba(85, 38, 255, 0.32);
 }
 
-.rewardOrb span {
-  color: white;
+.exploreButton:active {
+    transform: translateY(1px);
 
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+    filter: brightness(0.92);
+
+    box-shadow:
+        0 4px 12px rgba(85, 38, 255, 0.22);
 }
+
+/* =========================================
+   TRUST ROW
+========================================= */
+
+.trustRow {
+    display: flex;
+    align-items: center;
+
+    gap: 23px;
+
+    margin-top: 42px;
+}
+
+.trustItem {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 0;
+}
+
+.trustIcon {
+    width: 45px;
+    height: 45px;
+
+    flex: 0 0 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.015);
+}
+
+.secureIcon {
+    color: #58eb61;
+
+    border: 1px solid rgba(75, 224, 84, 0.75);
+
+    box-shadow:
+        0 0 16px rgba(69, 225, 77, 0.07);
+}
+
+.fairIcon {
+    color: #d14cff;
+
+    border: 1px solid rgba(204, 62, 255, 0.75);
+
+    box-shadow:
+        0 0 16px rgba(204, 62, 255, 0.07);
+}
+
+.trustedIcon {
+    color: #58eb61;
+
+    border: 1px solid rgba(75, 224, 84, 0.75);
+
+    box-shadow:
+        0 0 16px rgba(69, 225, 77, 0.07);
+}
+
+.trustCopy {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    white-space: nowrap;
+}
+
+.trustCopy strong {
+    color: #ededf5;
+
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    line-height: 1.2;
+}
+
+.trustCopy span {
+    color: #8c8ea0;
+
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 10px;
+    font-weight: 400;
+
+    line-height: 1.25;
+}
+
+.trustDivider {
+    width: 1px;
+    height: 42px;
+
+    flex: 0 0 1px;
+
+    background: rgba(139, 140, 163, 0.24);
+}
+
+/* =========================================
+   RIGHT ARTWORK
+========================================= */
+
+.heroVisual {
+    position: relative;
+
+    height: 620px;
+
+    overflow: visible;
+}
+
+.heroGlow {
+    position: absolute;
+
+    width: 680px;
+    height: 520px;
+
+    right: -5px;
+    top: 75px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(154, 36, 255, 0.34) 0%,
+            rgba(91, 32, 255, 0.14) 38%,
+            transparent 72%
+        );
+
+    filter: blur(30px);
+
+    pointer-events: none;
+}
+
+.heroImage {
+    position: absolute;
+
+    z-index: 2;
+
+    width: 760px;
+
+    max-width: none;
+    height: auto;
+
+    right: -10px;
+    top: 5px;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 0 24px rgba(161, 36, 255, 0.25)
+        )
+        drop-shadow(
+            0 22px 30px rgba(0, 0, 0, 0.22)
+        );
+}
+
+/* =========================================
+   TEMPORARY NEXT SECTION
+========================================= */
 
 .placeholderSection {
-  padding: 80px 0;
+    min-height: 350px;
+
+    padding: 80px 0;
+
+    background: #030518;
 }
 
 .placeholderSection h2 {
-  margin: 0;
+    margin: 0;
 
-  font-size: 36px;
-  letter-spacing: -0.03em;
+    color: #ffffff;
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 32px;
+    font-weight: 700;
+
+    letter-spacing: -0.035em;
 }
 
-@media (max-width: 767px) {
-  .hero {
-    padding: 48px 0 56px;
-  }
+/* =========================================
+   LARGE LAPTOP
+========================================= */
 
-  .heroContent {
-    grid-template-columns: 1fr;
-    gap: 40px;
+@media (max-width: 1250px) {
+    .heroContent {
+        grid-template-columns: 48% 52%;
+    }
 
-    min-height: auto;
-  }
+    .heroCopy {
+        padding-left: 10px;
+    }
 
-  .heroTitle {
-    font-size: clamp(42px, 13vw, 60px);
-  }
+    .heroTitle {
+        font-size: 53px;
+    }
 
-  .heroDescription {
+    .heroDescription {
+        font-size: 15px;
+    }
+
+    .heroActions {
+        gap: 25px;
+    }
+
+    .heroActions button:first-child {
+        min-width: 320px;
+    }
+
+    .trustRow {
+        gap: 16px;
+    }
+
+    .trustDivider {
+        display: none;
+    }
+
+    .trustCopy strong {
+        font-size: 11px;
+    }
+
+    .trustCopy span {
+        font-size: 9px;
+    }
+
+    .heroImage {
+        width: 690px;
+        right: -55px;
+    }
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+    .hero {
+        min-height: 560px;
+    }
+
+    .heroContent {
+        grid-template-columns: 48% 52%;
+
+        min-height: 560px;
+    }
+
+    .heroVisual {
+        height: 560px;
+    }
+
+    .heroTitle {
+        font-size: 45px;
+    }
+
+    .heroDescription {
+        font-size: 14px;
+    }
+
+    .heroActions {
+        gap: 20px;
+    }
+
+    .heroActions button:first-child {
+        min-width: 250px;
+
+        height: 52px;
+
+        font-size: 14px;
+    }
+
+    .learnButton {
+        font-size: 13px;
+    }
+
+    .trustRow {
+        gap: 15px;
+    }
+
+    .trustIcon {
+        width: 38px;
+        height: 38px;
+
+        flex-basis: 38px;
+    }
+
+    .trustCopy strong {
+        font-size: 9px;
+    }
+
+    .trustCopy span {
+        font-size: 8px;
+    }
+
+    .heroImage {
+        width: 590px;
+        right: -60px;
+        top: 10px;
+    }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+    .hero {
+        min-height: auto;
+
+        overflow: hidden;
+    }
+
+    .heroContent {
+        display: flex;
+        flex-direction: column;
+
+        min-height: auto;
+    }
+
+    .heroCopy {
+        padding:
+            40px
+            20px
+            0;
+    }
+
+    .heroTitle {
+        max-width: 100%;
+
+        margin-top: 21px;
+
+        font-size: 42px;
+
+        line-height: 1;
+    }
+
+    .heroDescription {
+        max-width: 100%;
+
+        font-size: 14px;
+    }
+
+    .desktopBreak {
+        display: none;
+    }
+
+    .heroActions {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 18px;
+
+        margin-top: 26px;
+    }
+
+    .heroActions button:first-child {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .trustRow {
+        flex-wrap: wrap;
+
+        gap: 18px;
+
+        margin-top: 30px;
+    }
+
+    .trustDivider {
+        display: none;
+    }
+
+    .heroVisual {
+        height: 370px;
+
+        margin-top: 10px;
+    }
+
+    .heroImage {
+        width: 590px;
+
+        right: 50%;
+        top: -5px;
+
+        transform: translateX(50%);
+    }
+
+    .heroGlow {
+        right: 50%;
+
+        transform: translateX(50%);
+    }
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 430px) {
+    .heroCopy {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .heroTitle {
+        font-size: 35px;
+    }
+
+    .heroBadge {
+        height: 31px;
+
+        padding: 0 11px;
+
+        font-size: 11px;
+    }
+
+    .heroDescription {
+        font-size: 13px;
+    }
+
+    .heroVisual {
+        height: 315px;
+    }
+
+    .heroImage {
+        width: 510px;
+    }
+}
+
+
+
+
+
+/* =========================================
+   FEATURED GIVEAWAYS
+========================================= */
+
+.featuredSection {
+    position: relative;
+    z-index: 5;
+    margin-top: -60px;
+    background: #030518;
+}
+
+.featuredContainer {
+    width: 100%;
+    max-width: 1540px;
+    margin: 0 auto;
+    padding: 0 78px;
+    box-sizing: border-box;
+}
+
+.featuredCard {
+    min-height: 170px;
+
+    padding: 0 48px;
+
+    border: 1px solid rgba(105, 111, 173, 0.22);
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(12, 15, 40, 0.92) 0%,
+            rgba(7, 9, 28, 0.96) 100%
+        );
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.featuredHeader {
+    min-height: 100px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.featuredTitle {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+}
+
+.featuredStar {
+    color: #ffc62f;
+
+    font-size: 34px;
+    line-height: 1;
+
+    filter:
+        drop-shadow(
+            0 0 10px rgba(255, 198, 47, 0.16)
+        );
+}
+
+.featuredTitle h2 {
+    margin: 0;
+
+    color: #f4f4f8;
+
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 27px;
+    font-weight: 600;
+
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+}
+
+.viewAllButton {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #d15cff;
+
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
     font-size: 16px;
-  }
+    font-weight: 500;
 
-  .heroActions {
-    flex-direction: column;
-    align-items: stretch;
-  }
+    cursor: pointer;
 
-  .heroVisual {
-    min-height: 280px;
-  }
+    transition:
+        color 160ms ease,
+        transform 160ms ease;
+}
 
-  .rewardOrb {
-    width: 220px;
-    height: 220px;
-  }
+.viewAllButton svg {
+    transition:
+        transform 160ms ease;
+}
 
-  .rewardOrb span {
-    font-size: 17px;
-  }
+.viewAllButton:hover {
+    color: #e078ff;
+}
 
-  .placeholderSection {
-    padding: 56px 0;
-  }
+.viewAllButton:hover svg {
+    transform: translateX(4px);
+}
+
+.viewAllButton:active {
+    transform: translateY(1px);
+}
+
+.viewAllButton:focus-visible {
+    outline: 2px solid #c653ff;
+    outline-offset: 6px;
+    border-radius: 4px;
 }

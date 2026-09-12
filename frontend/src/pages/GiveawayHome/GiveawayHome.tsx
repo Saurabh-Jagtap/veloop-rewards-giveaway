@@ -1,63 +1,177 @@
-import Container from "../../components/common/Container/Container";
+import {
+    FiArrowRight,
+    FiFileText,
+    FiShield,
+    FiUsers,
+} from "react-icons/fi";
+
 import Button from "../../components/common/Button/Button";
-import Badge from "../../components/common/Badge/Badge";
+import Navbar from "../../components/common/Navbar/Navbar";
+
+import heroGiveaway from "../../assets/giveaway/hero-giveaway.png";
 
 import styles from "./GiveawayHome.module.css";
-import Navbar from "../../components/common/Navbar/Navbar";
 
 function GiveawayHome() {
     return (
         <>
             <Navbar />
 
-            <main>
+            <main className={styles.page}>
                 <section className={styles.hero}>
-                    <Container>
+                    <div className={styles.heroContainer}>
                         <div className={styles.heroContent}>
                             <div className={styles.heroCopy}>
-                                <Badge variant="primary">
-                                    EXCLUSIVE GIVEAWAY
-                                </Badge>
+                                <div className={styles.heroBadge}>
+                                    <span className={styles.heroBadgeStar}>
+                                        ★
+                                    </span>
+
+                                    <span>EXCLUSIVE GIVEAWAYS</span>
+                                </div>
 
                                 <h1 className={styles.heroTitle}>
-                                    Rewards worth
-                                    <span> winning.</span>
+                                    Win Rewards
+                                    <br />
+                                    Worth Getting
+                                    <br />
+                                    <span>Excited</span> About!
                                 </h1>
 
                                 <p className={styles.heroDescription}>
-                                    Complete eligible activities, collect
-                                    entries and get a chance to win exciting
-                                    rewards.
+                                    Join exciting giveaways, complete simple
+                                    tasks,
+                                    <br className={styles.desktopBreak} />
+                                    and win premium rewards from VELOOP
+                                    Rewards.
                                 </p>
 
                                 <div className={styles.heroActions}>
-                                    <Button size="lg">
-                                        Explore Giveaways
+                                    <Button
+                                        size="lg"
+                                        className={styles.exploreButton}
+                                    >
+                                        <span>Explore Giveaways</span>
+                                        <FiArrowRight
+                                            size={19}
+                                            strokeWidth={2}
+                                        />
                                     </Button>
 
-                                    <Button
-                                        variant="ghost"
-                                        size="lg"
+                                    <button
+                                        type="button"
+                                        className={styles.learnButton}
                                     >
-                                        How it works
-                                    </Button>
+                                        <span>Learn how it works</span>
+
+                                        <FiArrowRight
+                                            size={18}
+                                            strokeWidth={2}
+                                        />
+                                    </button>
+                                </div>
+
+                                <div className={styles.trustRow}>
+                                    <div className={styles.trustItem}>
+                                        <div
+                                            className={`${styles.trustIcon} ${styles.secureIcon}`}
+                                        >
+                                            <FiShield
+                                                size={20}
+                                                strokeWidth={1.8}
+                                            />
+                                        </div>
+
+                                        <div className={styles.trustCopy}>
+                                            <strong>100% Secure</strong>
+                                            <span>Your data is protected</span>
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.trustDivider} />
+
+                                    <div className={styles.trustItem}>
+                                        <div
+                                            className={`${styles.trustIcon} ${styles.fairIcon}`}
+                                        >
+                                            <FiFileText
+                                                size={20}
+                                                strokeWidth={1.8}
+                                            />
+                                        </div>
+
+                                        <div className={styles.trustCopy}>
+                                            <strong>
+                                                Fair &amp; Transparent
+                                            </strong>
+                                            <span>
+                                                Winners selected fairly
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.trustDivider} />
+
+                                    <div className={styles.trustItem}>
+                                        <div
+                                            className={`${styles.trustIcon} ${styles.trustedIcon}`}
+                                        >
+                                            <FiUsers
+                                                size={20}
+                                                strokeWidth={1.8}
+                                            />
+                                        </div>
+
+                                        <div className={styles.trustCopy}>
+                                            <strong>
+                                                Trusted by 10K+ Users
+                                            </strong>
+                                            <span>
+                                                Join our growing community
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                             <div className={styles.heroVisual}>
-                                <div className={styles.rewardOrb}>
-                                    <span>REWARDS</span>
-                                </div>
+                                <div className={styles.heroGlow} />
+
+                                <img
+                                    src={heroGiveaway}
+                                    alt="Giveaway ticket held by a hand"
+                                    className={styles.heroImage}
+                                />
                             </div>
                         </div>
-                    </Container>
+                    </div>
                 </section>
 
-                <section className={styles.placeholderSection}>
-                    <Container>
-                        <h2>Featured Rewards</h2>
-                    </Container>
-                </section>
+                <section className={styles.featuredSection}>
+    <div className={styles.featuredContainer}>
+        <div className={styles.featuredCard}>
+            <div className={styles.featuredHeader}>
+                <div className={styles.featuredTitle}>
+                    <span className={styles.featuredStar}>★</span>
+
+                    <h2>Featured Giveaways</h2>
+                </div>
+
+                <button
+                    type="button"
+                    className={styles.viewAllButton}
+                >
+                    <span>View All Giveaways</span>
+
+                    <FiArrowRight
+                        size={20}
+                        strokeWidth={2}
+                    />
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
             </main>
         </>
     );
