@@ -1,3 +1,9 @@
+import iphone15Pro from "../assets/giveaway/iphone-15-pro.png";
+import appleWatch from "../assets/giveaway/apple-watch.png";
+import airpodsPro2 from "../assets/giveaway/airpods-pro-2.png";
+import amazon2000 from "../assets/giveaway/amazon-2000.png";
+import amazon500 from "../assets/giveaway/amazon-500.png";
+import amazon20 from "../assets/giveaway/amazon-20.png";
 import type { Giveaway } from "./types";
 
 export const giveaways: Giveaway[] = [
@@ -27,7 +33,7 @@ export const giveaways: Giveaway[] = [
             name: "iPhone 15 Pro",
             description:
                 "Experience the powerful performance and premium design of the iPhone 15 Pro.",
-            image: "/assets/prizes/iphone-15-pro.png",
+            image: iphone15Pro,
             type: "physical",
         },
 
@@ -94,7 +100,7 @@ export const giveaways: Giveaway[] = [
             name: "Apple Watch",
             description:
                 "Stay connected, active, and informed with an Apple Watch.",
-            image: "/assets/prizes/apple-watch.png",
+            image: appleWatch,
             type: "physical",
         },
 
@@ -161,7 +167,7 @@ export const giveaways: Giveaway[] = [
             name: "AirPods",
             description:
                 "Enjoy an immersive wireless audio experience with AirPods.",
-            image: "/assets/prizes/airpods.png",
+            image: airpodsPro2,
             type: "physical",
         },
 
@@ -227,7 +233,7 @@ export const giveaways: Giveaway[] = [
             id: "amazon-2000",
             name: "₹2,000 Amazon Voucher",
             description: "A ₹2,000 Amazon Voucher for your next purchase.",
-            image: "/assets/prizes/amazon-voucher.png",
+            image: amazon2000,
             type: "gift-card",
             value: 2000,
             valueCurrency: "INR",
@@ -286,7 +292,7 @@ export const giveaways: Giveaway[] = [
             id: "amazon-500",
             name: "₹500 Amazon Voucher",
             description: "A ₹500 Amazon Voucher for your next purchase.",
-            image: "/assets/prizes/amazon-voucher.png",
+            image: amazon500,
             type: "gift-card",
             value: 500,
             valueCurrency: "INR",
@@ -345,7 +351,7 @@ export const giveaways: Giveaway[] = [
             id: "amazon-20",
             name: "₹20 Voucher",
             description: "A ₹20 voucher that can be claimed by the selected winner.",
-            image: "/assets/prizes/amazon-voucher.png",
+            image: amazon20,
             type: "gift-card",
             value: 20,
             valueCurrency: "INR",

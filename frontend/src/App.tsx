@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import GiveawayHome from "./pages/GiveawayHome/GiveawayHome";
+import GiveawayDetails from "./pages/GiveawayDetails/GiveawayDetails";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
 
         <Route
           path="/giveaway/:id"
-          element={<div>Giveaway Details</div>}
+          element={<GiveawayDetails />}
         />
 
         <Route

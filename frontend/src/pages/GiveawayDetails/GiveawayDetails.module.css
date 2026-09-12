@@ -1,0 +1,184 @@
+.page {
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      ellipse 70% 35% at 50% 0%,
+      rgba(89, 28, 170, 0.08),
+      transparent 70%
+    ),
+    #030518;
+
+  color: #ffffff;
+}
+
+.main {
+  width: 100%;
+}
+
+.hero {
+  width: 100%;
+}
+
+.heroContainer {
+  max-width: 1540px;
+  min-height: 560px;
+
+  margin: 0 auto;
+  padding: 0 78px;
+
+  display: grid;
+  grid-template-columns: 50% 50%;
+  align-items: center;
+}
+
+.heroVisual,
+.heroContent {
+  min-width: 0;
+}
+
+.section {
+  width: 100%;
+
+  max-width: 1540px;
+  min-height: 100px;
+
+  margin: 0 auto;
+  padding: 20px 78px;
+}
+
+/* --------------------------------
+   Error State
+-------------------------------- */
+
+.errorState {
+  min-height: 620px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 60px 24px;
+}
+
+.errorContent {
+  max-width: 520px;
+
+  text-align: center;
+}
+
+.errorContent span {
+  display: inline-block;
+
+  margin-bottom: 12px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #c653ff;
+
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.errorContent h1 {
+  margin: 0 0 10px;
+
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 600;
+
+  color: #f7f5ff;
+}
+
+.errorContent p {
+  margin: 0 0 24px;
+
+  font-size: 14px;
+  line-height: 1.6;
+
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 160px;
+  height: 40px;
+
+  padding: 0 20px;
+
+  border-radius: 7px;
+
+  background: linear-gradient(
+    90deg,
+    #b62cff,
+    #5830ff
+  );
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  text-decoration: none;
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.backButton:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 7px 20px rgba(128, 42, 255, 0.25);
+}
+
+/* --------------------------------
+   Responsive
+-------------------------------- */
+
+@media (max-width: 1000px) {
+  .heroContainer {
+    padding: 0 32px;
+
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .section {
+    padding: 20px 32px;
+  }
+}
+
+@media (max-width: 700px) {
+  .heroContainer {
+    min-height: auto;
+
+    padding: 30px 20px 40px;
+
+    grid-template-columns: 1fr;
+  }
+
+  .heroVisual {
+    order: 1;
+  }
+
+  .heroContent {
+    order: 2;
+  }
+
+  .section {
+    padding: 16px 20px;
+  }
+
+  .errorState {
+    min-height: 500px;
+  }
+
+  .errorContent h1 {
+    font-size: 25px;
+  }
+}

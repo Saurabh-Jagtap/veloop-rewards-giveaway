@@ -1,0 +1,397 @@
+.section {
+    width: 100%;
+    padding: 0 0 8px;
+}
+
+.container {
+    max-width: 1540px;
+    margin: 0 auto;
+    padding: 0 78px;
+}
+
+.card {
+  position: relative;
+
+  height: 340px;
+
+  display: grid;
+  grid-template-columns: 52% 48%;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(100, 110, 180, 0.18);
+  border-radius: 8px;
+
+  background:
+    linear-gradient(
+      105deg,
+      rgba(9, 10, 31, 0.98) 0%,
+      rgba(8, 9, 30, 0.96) 48%,
+      rgba(9, 8, 31, 0.9) 100%
+    );
+}
+
+/* --------------------------------
+   Content
+-------------------------------- */
+
+.content {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  padding: 26px 28px 24px 36px;
+
+  max-width: 560px;
+  box-sizing: border-box;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 10px;
+
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 500;
+
+  color: #ffb51b;
+}
+
+.sparkle {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.title {
+  margin: 0 0 9px;
+
+  font-size: 30px;
+  line-height: 1.15;
+  font-weight: 700;
+
+  color: #f8f7ff;
+}
+
+.description {
+  width: 100%;
+  max-width: 440px;
+
+  margin: 0 0 15px;
+
+  font-size: 13px;
+  line-height: 1.5;
+
+  color: rgba(255, 255, 255, 0.68);
+}
+
+/* --------------------------------
+   Features
+-------------------------------- */
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  padding: 0;
+  margin: 0;
+
+  list-style: none;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  min-height: 17px;
+
+  font-size: 12px;
+  line-height: 1.3;
+
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.feature svg {
+  width: 15px;
+  height: 15px;
+
+  flex-shrink: 0;
+
+  color: #e34cff;
+  stroke-width: 2;
+}
+
+/* --------------------------------
+   Winner Card
+-------------------------------- */
+
+.winnerCard {
+  width: 255px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+
+  margin-top: 13px;
+  padding: 8px 12px;
+
+  box-sizing: border-box;
+
+  border: 1px solid rgba(120, 110, 180, 0.18);
+  border-radius: 8px;
+
+  background: rgba(17, 18, 43, 0.62);
+}
+
+/* Trophy / award icon container */
+
+.winnerIcon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-right: 12px;
+
+  border-radius: 9px;
+
+  background: rgba(255, 171, 0, 0.10);
+}
+
+.winnerIcon svg {
+  width: 20px;
+  height: 20px;
+
+  color: #ffb000;
+  stroke-width: 2;
+}
+
+/* Winner information */
+
+.winnerContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+
+  min-width: 0;
+}
+
+.winnerContent span {
+  display: block;
+
+  margin: 0;
+
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 400;
+
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.winnerContent strong {
+  display: block;
+
+  margin: 0;
+
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 600;
+
+  color: #ffffff;
+}
+
+/* --------------------------------
+   Visual
+-------------------------------- */
+
+.visual {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    overflow: hidden;
+}
+
+.imageGlow {
+    position: absolute;
+
+    width: 390px;
+    height: 260px;
+
+    left: 35%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background: rgba(123, 35, 255, 0.13);
+
+    filter: blur(55px);
+}
+
+.image {
+    position: absolute;
+
+    z-index: 1;
+
+    width: 640px;
+    height: 500px;
+
+    max-width: none;
+
+    left: -30px;
+    top: 18px;
+
+    object-fit: contain;
+}
+
+/* --------------------------------
+   Background Effects
+-------------------------------- */
+
+.backgroundEffects {
+    position: absolute;
+    inset: 0;
+
+    z-index: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+/* Main purple bloom behind the prize */
+
+.glow {
+    position: absolute;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+.glowPrimary {
+    width: 470px;
+    height: 330px;
+
+    right: 90px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    background:
+        radial-gradient(ellipse,
+            rgba(132, 38, 255, 0.34) 0%,
+            rgba(104, 28, 225, 0.20) 35%,
+            rgba(74, 20, 170, 0.08) 58%,
+            transparent 75%);
+
+    filter: blur(18px);
+}
+
+.glowSecondary {
+    width: 350px;
+    height: 240px;
+
+    right: 300px;
+    top: 42%;
+
+    transform: translateY(-50%);
+
+    background:
+        radial-gradient(ellipse,
+            rgba(186, 58, 255, 0.18),
+            transparent 70%);
+
+    filter: blur(35px);
+}
+
+/* --------------------------------
+   Tablet
+-------------------------------- */
+
+@media (max-width: 1000px) {
+    .container {
+        padding: 0 32px;
+    }
+
+    .card {
+        grid-template-columns: 55% 45%;
+        height: 300px;
+    }
+
+    .content {
+        padding: 20px 24px;
+    }
+
+    .image {
+        width: 470px;
+        height: 330px;
+
+        left: -25px;
+        top: -15px;
+    }
+}
+
+/* --------------------------------
+   Mobile
+-------------------------------- */
+
+@media (max-width: 700px) {
+    .container {
+        padding: 0 20px;
+    }
+
+    .card {
+        height: auto;
+        min-height: 540px;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content {
+        padding: 22px 20px 0;
+    }
+
+    .title {
+        font-size: 23px;
+    }
+
+    .description {
+        max-width: none;
+        font-size: 11px;
+    }
+
+    .winnerCard {
+        width: 100%;
+        max-width: 245px;
+    }
+
+    .visual {
+        height: 245px;
+        margin-top: auto;
+    }
+
+    .image {
+        width: 390px;
+        height: 280px;
+
+        left: 50%;
+        top: -15px;
+
+        transform: translateX(-50%);
+    }
+}
