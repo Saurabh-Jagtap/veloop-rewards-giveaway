@@ -1,0 +1,295 @@
+/* =========================================
+   SECTION
+========================================= */
+
+.section {
+    width: 100%;
+
+    padding: 24px 0 0;
+
+    background: #030518;
+}
+
+.container {
+    width: 100%;
+
+    max-width: 1540px;
+
+    margin: 0 auto;
+
+    padding: 0 78px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.card {
+    width: 100%;
+
+    padding: 30px 34px 34px;
+
+    border: 1px solid rgba(105, 111, 173, 0.22);
+
+    border-radius: 20px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(12, 15, 40, 0.94) 0%,
+            rgba(7, 9, 28, 0.98) 100%
+        );
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+    display: flex;
+
+    justify-content: center;
+
+    text-align: center;
+
+    margin-bottom: 28px;
+}
+
+.titleBlock {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.eyebrow {
+    margin-bottom: 8px;
+
+    color: #c653ff;
+
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.12em;
+}
+
+.titleBlock h2 {
+    margin: 0 0 7px;
+
+    color: #f4f4f8;
+
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 27px;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    letter-spacing: -0.025em;
+}
+
+.titleBlock p {
+    margin: 0;
+
+    color: #9294a8;
+
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 400;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   FAQ LIST
+========================================= */
+
+.faqList {
+    width: 100%;
+
+    max-width: 980px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+/* =========================================
+   FAQ ITEM
+========================================= */
+
+.faqItem {
+    border: 1px solid rgba(105, 111, 173, 0.18);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    background:
+        rgba(255, 255, 255, 0.018);
+
+    transition:
+        border-color 160ms ease,
+        background 160ms ease;
+}
+
+.faqItem:hover {
+    border-color: rgba(153, 74, 255, 0.32);
+
+    background:
+        rgba(121, 43, 255, 0.035);
+}
+
+.faqItem.open {
+    border-color: rgba(153, 74, 255, 0.38);
+
+    background:
+        rgba(121, 43, 255, 0.045);
+}
+
+
+/* =========================================
+   QUESTION
+========================================= */
+
+.question {
+    width: 100%;
+
+    min-height: 62px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 0 20px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #eeeeF5;
+
+    text-align: left;
+
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.question:focus-visible {
+    outline: 2px solid #c653ff;
+
+    outline-offset: -2px;
+}
+
+
+/* =========================================
+   CHEVRON
+========================================= */
+
+.chevron {
+    width: 32px;
+    height: 32px;
+
+    flex: 0 0 32px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: #aaaabd;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    transition:
+        transform 180ms ease,
+        color 180ms ease,
+        background 180ms ease;
+}
+
+.open .chevron {
+    transform: rotate(180deg);
+
+    color: #c653ff;
+
+    background: rgba(137, 46, 255, 0.10);
+}
+
+
+/* =========================================
+   ANSWER
+========================================= */
+
+.answerWrapper {
+    padding: 0 20px 18px;
+}
+
+.answer {
+    max-width: 850px;
+
+    margin: 0;
+
+    color: #9294a8;
+
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 400;
+
+    line-height: 1.65;
+}

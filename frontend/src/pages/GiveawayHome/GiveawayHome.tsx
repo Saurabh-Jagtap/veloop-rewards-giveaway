@@ -12,6 +12,9 @@ import heroGiveaway from "../../assets/giveaway/hero-giveaway.png";
 import styles from "./GiveawayHome.module.css";
 import HowToParticipate from "../../components/giveaway/HowToParticipate/HowToParticipate";
 import FeaturedGiveaways from "../../components/giveaway/FeaturedGiveaways/FeaturedGiveaways";
+import FrequentlyAskedQuestions from "../../components/giveaway/FrequentlyAskedQuestions/FrequentlyAskedQuestions";
+import YourNextReward from "../../components/giveaway/YourNextReward/YourNextReward";
+import GiveawayFooter from "../../components/giveaway/GiveawayFooter/GiveawayFooter";
 
 function GiveawayHome() {
     return (
@@ -151,6 +154,12 @@ function GiveawayHome() {
                 <FeaturedGiveaways />
 
                 <HowToParticipate />
+
+                <FrequentlyAskedQuestions />
+
+                <YourNextReward />
+
+                <GiveawayFooter />
             </main>
         </>
     );

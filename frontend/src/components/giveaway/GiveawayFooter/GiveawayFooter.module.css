@@ -1,0 +1,392 @@
+.footer {
+    width: 100%;
+    margin-top: 18px;
+
+    background:
+        radial-gradient(ellipse 45% 100% at 18% 0%,
+            rgba(112, 34, 255, 0.08),
+            transparent 70%),
+        linear-gradient(180deg,
+            #05061a 0%,
+            #030415 100%);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.container {
+    max-width: 1540px;
+    margin: 0 auto;
+    padding: 32px 78px 12px;
+}
+
+.footerGrid {
+    display: grid;
+    grid-template-columns:
+        1.45fr 1fr 1fr 1fr 1.25fr;
+
+    gap: 42px;
+}
+
+/* --------------------------------
+   Brand
+-------------------------------- */
+
+.brandColumn {
+    min-width: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logoMark {
+    width: 31px;
+    height: 31px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: linear-gradient(135deg,
+            #b62cff,
+            #6130ff);
+
+    color: #ffffff;
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: -1px;
+
+    box-shadow:
+        0 0 16px rgba(138, 45, 255, 0.25);
+}
+
+.logoText {
+    display: flex;
+    flex-direction: column;
+}
+
+.logoText span {
+    font-size: 17px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+
+    color: #f7f5ff;
+}
+
+.logoText small {
+    margin-top: 3px;
+
+    font-size: 6px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+
+    color: #e1a522;
+}
+
+.brandDescription {
+    margin: 11px 0 13px;
+
+    font-size: 11px;
+    line-height: 1.45;
+
+    color: rgba(255, 255, 255, 0.48);
+}
+
+/* --------------------------------
+   Socials
+-------------------------------- */
+
+.socialLinks {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.socialLink {
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 50%;
+
+    color: rgba(255, 255, 255, 0.65);
+
+    background: rgba(255, 255, 255, 0.025);
+
+    transition:
+        color 180ms ease,
+        border-color 180ms ease,
+        background 180ms ease,
+        transform 180ms ease;
+}
+
+.socialLink svg {
+    width: 11px;
+    height: 11px;
+}
+
+.socialLink:hover {
+    color: #d05cff;
+
+    border-color: rgba(190, 71, 255, 0.45);
+
+    background: rgba(166, 44, 255, 0.10);
+
+    transform: translateY(-2px);
+}
+
+/* --------------------------------
+   Link columns
+-------------------------------- */
+
+.linkColumn,
+.newsletterColumn {
+    min-width: 0;
+}
+
+.linkColumn h3,
+.newsletterColumn h3 {
+    margin: 0 0 10px;
+
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 600;
+
+    color: #f2efff;
+}
+
+.linkColumn nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.linkColumn a {
+    width: fit-content;
+
+    font-size: 11px;
+    line-height: 1.35;
+
+    color: rgba(255, 255, 255, 0.48);
+
+    text-decoration: none;
+
+    transition:
+        color 180ms ease,
+        transform 180ms ease;
+}
+
+.linkColumn a:hover {
+    color: #c653ff;
+    transform: translateX(2px);
+}
+
+/* --------------------------------
+   Newsletter
+-------------------------------- */
+
+.newsletterColumn p {
+    margin: 0 0 10px;
+
+    font-size: 11px;
+    line-height: 1.45;
+
+    color: rgba(255, 255, 255, 0.48);
+}
+
+.newsletterForm {
+    width: 100%;
+}
+
+.inputWrapper {
+    height: 31px;
+
+    display: flex;
+    align-items: center;
+
+    padding-left: 9px;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 6px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.inputWrapper:focus-within {
+    border-color: rgba(181, 66, 255, 0.55);
+
+    box-shadow:
+        0 0 0 2px rgba(181, 66, 255, 0.08);
+}
+
+.inputWrapper>svg {
+    width: 12px;
+    height: 12px;
+
+    flex-shrink: 0;
+
+    color: rgba(255, 255, 255, 0.38);
+}
+
+.inputWrapper input {
+    min-width: 0;
+    flex: 1;
+
+    height: 100%;
+
+    padding: 0 7px;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 11px;
+}
+
+.inputWrapper input::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.inputWrapper button {
+    width: 27px;
+    height: 25px;
+
+    margin-right: 3px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: 5px;
+
+    background: linear-gradient(135deg,
+            #b62cff,
+            #5830ff);
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.inputWrapper button svg {
+    width: 12px;
+    height: 12px;
+}
+
+.inputWrapper button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 4px 12px rgba(126, 40, 255, 0.30);
+}
+
+/* --------------------------------
+   Bottom bar
+-------------------------------- */
+
+.bottomBar {
+    margin-top: 20px;
+    padding-top: 9px;
+
+    display: flex;
+    justify-content: center;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.055);
+}
+
+.bottomBar span {
+    font-size: 10px;
+    line-height: 1.3;
+
+    color: rgba(255, 255, 255, 0.35);
+}
+
+/* --------------------------------
+   Accessibility
+-------------------------------- */
+
+.srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* --------------------------------
+   Tablet
+-------------------------------- */
+
+@media (max-width: 1000px) {
+    .container {
+        padding: 30px 32px 12px;
+    }
+
+    .footerGrid {
+        grid-template-columns:
+            1.4fr 1fr 1fr 1fr;
+
+        gap: 30px;
+    }
+
+    .newsletterColumn {
+        grid-column: 1 / -1;
+        max-width: 320px;
+    }
+}
+
+/* --------------------------------
+   Mobile
+-------------------------------- */
+
+@media (max-width: 640px) {
+    .container {
+        padding: 28px 20px 12px;
+    }
+
+    .footerGrid {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px 20px;
+    }
+
+    .brandColumn {
+        grid-column: 1 / -1;
+    }
+
+    .newsletterColumn {
+        grid-column: 1 / -1;
+        max-width: none;
+    }
+
+    .bottomBar {
+        margin-top: 24px;
+    }
+}

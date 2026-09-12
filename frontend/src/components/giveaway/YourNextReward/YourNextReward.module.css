@@ -1,0 +1,345 @@
+.section {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.container {
+  max-width: 1540px;
+  margin: 0 auto;
+  padding: 10px 78px;
+}
+
+.card {
+  position: relative;
+  min-height: 116px;
+  display: grid;
+  grid-template-columns: 42% 32% 26%;
+  align-items: center;
+
+  padding: 15px;
+  overflow: hidden;
+
+  border: 1px solid rgba(171, 72, 255, 0.45);
+  border-radius: 10px;
+
+  background:
+    /* Right-side purple atmosphere */
+    radial-gradient(ellipse 42% 90% at 78% 50%,
+      rgba(132, 34, 255, 0.34),
+      rgba(87, 20, 180, 0.18) 35%,
+      transparent 72%),
+
+    /* Magenta glow behind the reward */
+    radial-gradient(ellipse 28% 65% at 82% 55%,
+      rgba(190, 38, 255, 0.22),
+      transparent 68%),
+
+    /* Sweeping purple light trail */
+    radial-gradient(ellipse 70% 55% at 72% 115%,
+      transparent 48%,
+      rgba(154, 43, 255, 0.16) 49%,
+      rgba(154, 43, 255, 0.08) 51%,
+      transparent 54%),
+
+    /* Second light trail */
+    radial-gradient(ellipse 75% 60% at 68% -15%,
+      transparent 48%,
+      rgba(116, 40, 255, 0.13) 49%,
+      rgba(116, 40, 255, 0.05) 51%,
+      transparent 54%),
+
+    /* Subtle central purple wave */
+    radial-gradient(ellipse 55% 40% at 57% 65%,
+      rgba(111, 35, 255, 0.10),
+      transparent 70%),
+
+    /* Tiny atmospheric lights */
+    radial-gradient(circle at 63% 25%,
+      rgba(255, 255, 255, 0.20) 0 1px,
+      transparent 2px),
+    radial-gradient(circle at 73% 72%,
+      rgba(211, 121, 255, 0.28) 0 1px,
+      transparent 2px),
+    radial-gradient(circle at 91% 28%,
+      rgba(255, 194, 80, 0.28) 0 1px,
+      transparent 2px),
+
+    /* Base */
+    linear-gradient(105deg,
+      #0c0a25 0%,
+      #0b0924 38%,
+      #11092d 62%,
+      #0b0822 100%);
+
+  box-shadow:
+    inset 0 0 35px rgba(119, 35, 255, 0.06),
+    0 8px 30px rgba(0, 0, 0, 0.18);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(ellipse 55% 100% at 58% 115%,
+      transparent 50%,
+      rgba(143, 39, 255, 0.12) 51%,
+      transparent 53%),
+    radial-gradient(ellipse 70% 90% at 75% 130%,
+      transparent 55%,
+      rgba(178, 48, 255, 0.10) 56%,
+      transparent 58%);
+
+  opacity: 0.9;
+}
+
+
+.card::after {
+  content: "";
+  position: absolute;
+  top: -30%;
+  right: 18%;
+  width: 55%;
+  height: 150%;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(115deg,
+      transparent 42%,
+      rgba(190, 67, 255, 0.05) 47%,
+      rgba(190, 67, 255, 0.12) 50%,
+      rgba(190, 67, 255, 0.04) 53%,
+      transparent 58%);
+
+  transform: rotate(-8deg);
+  filter: blur(10px);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+
+  padding: 20px 28px;
+}
+
+.content h2 {
+  margin: 0 0 5px;
+
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 600;
+
+  color: #f7f5ff;
+  letter-spacing: -0.3px;
+}
+
+.content p {
+  margin: 0 0 14px;
+
+  font-size: 13px;
+  line-height: 1.5;
+
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.exploreButton {
+  min-width: 178px;
+  height: 38px;
+
+  padding: 0 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  background: linear-gradient(90deg,
+      #b62cff 0%,
+      #752cff 52%,
+      #4430ff 100%);
+
+  box-shadow:
+    0 5px 16px rgba(128, 42, 255, 0.25);
+}
+
+.exploreButton:hover:not(:disabled) {
+  background: linear-gradient(90deg,
+      #b62cff 0%,
+      #752cff 52%,
+      #4430ff 100%);
+
+  box-shadow:
+    0 7px 20px rgba(128, 42, 255, 0.35);
+}
+
+.exploreButton svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 180ms ease;
+}
+
+.exploreButton:hover svg {
+  transform: translateX(3px);
+}
+
+.visual {
+  height: 180px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  padding-right: 42px;
+
+  overflow: hidden;
+  z-index: 1;
+}
+
+.visual img {
+  width: 390px;
+  height: 230px;
+
+  object-fit: contain;
+
+  transform: translateY(4px);
+
+  user-select: none;
+  pointer-events: none;
+}
+
+
+.benefits {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+
+  padding: 0 8px;
+}
+
+.benefit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  min-width: 0;
+}
+
+.benefitIcon {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.benefitIcon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.benefitIcon.purple {
+  color: #c653ff;
+  background: rgba(166, 44, 255, 0.12);
+  box-shadow: 0 0 18px rgba(166, 44, 255, 0.12);
+}
+
+.benefitIcon.blue {
+  color: #2794ff;
+  background: rgba(39, 148, 255, 0.12);
+  box-shadow: 0 0 18px rgba(39, 148, 255, 0.10);
+}
+
+.benefitIcon.green {
+  color: #35d477;
+  background: rgba(53, 212, 119, 0.12);
+  box-shadow: 0 0 18px rgba(53, 212, 119, 0.10);
+}
+
+.benefit span {
+  display: block;
+
+  font-size: 11px;
+  line-height: 1.25;
+  font-weight: 500;
+
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.benefit small {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 9px;
+  line-height: 1.2;
+
+  color: rgba(255, 255, 255, 0.45);
+}
+
+
+/* Tablet */
+@media (max-width: 900px) {
+  .container {
+    padding: 0 32px;
+  }
+
+  .card {
+    grid-template-columns: 1fr 0.7fr;
+  }
+
+  .content h2 {
+    font-size: 22px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .card {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .content {
+    padding: 24px 22px;
+  }
+
+  .content h2 {
+    font-size: 21px;
+  }
+
+  .content p {
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+
+  .exploreButton {
+    width: 100%;
+    max-width: 210px;
+  }
+
+  .visual {
+    display: none;
+  }
+}
