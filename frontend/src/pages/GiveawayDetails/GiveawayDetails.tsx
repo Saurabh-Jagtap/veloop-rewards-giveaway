@@ -6,6 +6,10 @@ import { getGiveawayById } from "../../services/giveaway.services";
 import GiveawayDetailsHero from "../../components/giveaway/GiveawayDetailsHero/GiveawayDetailsHero";
 import GiveawayStats from "../../components/giveaway/GiveawayStats/GiveawayStats";
 import AboutPrize from "../../components/giveaway/AboutPrize/AboutPrize";
+import HowThisGiveawayWorks from "../../components/giveaway/HowThisGiveawayWorks/HowThisGiveawayWorks";
+import ImportantInformation from "../../components/giveaway/ImportantInformation/ImportantInformation";
+import { GiveawayRules } from "../../components/giveaway/GiveawayRules/GiveawayRules";
+import { GiveawayDetailsFAQ } from "../../components/giveaway/GiveawayDetailsFAQ/GiveawayDetailsFAQ";
 
 const GiveawayDetails = () => {
     const { id } = useParams<{ id: string }>();
@@ -50,30 +54,14 @@ const GiveawayDetails = () => {
 
                 <AboutPrize giveaway={giveaway} />
 
-                {/* Prize Stats */}
-                <section className={styles.section}>
-                    {/* Stats will be implemented next */}
-                </section>
+                <HowThisGiveawayWorks giveaway={giveaway} />
 
-                {/* About the Prize */}
-                <section className={styles.section}>
-                    {/* About the prize will be implemented next */}
-                </section>
+                <ImportantInformation giveaway={giveaway} />
 
-                {/* How This Giveaway Works */}
-                <section className={styles.section}>
-                    {/* 7-step timeline will be implemented next */}
-                </section>
+                <GiveawayRules giveaway={giveaway} />
 
-                {/* Important Information */}
-                <section className={styles.section}>
-                    {/* Important information will be implemented next */}
-                </section>
-
-                {/* Rules + FAQ */}
-                <section className={styles.section}>
-                    {/* Rules and FAQ will be implemented next */}
-                </section>
+                <GiveawayDetailsFAQ giveaway={giveaway} />
+                
             </main>
 
             <GiveawayFooter />

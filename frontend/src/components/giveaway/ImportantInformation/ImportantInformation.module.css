@@ -1,0 +1,465 @@
+.section {
+    width: 100%;
+    padding: 0 0 8px;
+}
+
+.container {
+    max-width: 1540px;
+    margin: 0 auto;
+    padding: 0 78px;
+}
+
+/* --------------------------------
+   Card
+-------------------------------- */
+
+.card {
+    width: 100%;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(100, 110, 180, 0.18);
+    border-radius: 8px;
+
+    background:
+        linear-gradient(105deg,
+            rgba(9, 10, 31, 0.98) 0%,
+            rgba(8, 9, 30, 0.96) 48%,
+            rgba(9, 8, 31, 0.92) 100%);
+}
+
+/* --------------------------------
+   Header
+-------------------------------- */
+
+.header {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 17px 22px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 180ms ease,
+        border-color 180ms ease;
+}
+
+.header:hover {
+    background: rgba(255, 255, 255, 0.018);
+}
+
+.header:focus-visible {
+    outline: 2px solid #c653ff;
+    outline-offset: -2px;
+}
+
+/* --------------------------------
+   Header Content
+-------------------------------- */
+
+.headerContent {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+}
+
+.headerIcon {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(198, 83, 255, 0.35);
+    border-radius: 9px;
+
+    background: rgba(164, 44, 255, 0.08);
+
+    color: #c653ff;
+}
+
+.headerIcon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.headerContent h2 {
+    margin: 0 0 3px;
+
+    font-size: 16px;
+    line-height: 1.25;
+    font-weight: 600;
+
+    color: #f5f4ff;
+}
+
+.headerContent p {
+    margin: 0;
+
+    font-size: 11px;
+    line-height: 1.45;
+
+    color: rgba(255, 255, 255, 0.52);
+}
+
+/* --------------------------------
+   Chevron
+-------------------------------- */
+
+.chevron {
+    width: 32px;
+    height: 32px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 50%;
+
+    color: rgba(255, 255, 255, 0.65);
+
+    transition:
+        transform 220ms ease,
+        background 180ms ease,
+        color 180ms ease;
+}
+
+.chevron svg {
+    width: 17px;
+    height: 17px;
+}
+
+.chevronOpen {
+    transform: rotate(180deg);
+
+    background: rgba(198, 83, 255, 0.08);
+
+    color: #c653ff;
+}
+
+/* --------------------------------
+   Content
+-------------------------------- */
+
+.content {
+    padding: 0 22px 20px;
+
+    border-top: 1px solid rgba(100, 110, 180, 0.12);
+}
+
+.contentOpen {
+    animation: reveal 220ms ease;
+}
+
+@keyframes reveal {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --------------------------------
+   Information Grid
+-------------------------------- */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+
+    padding-top: 16px;
+}
+
+/* --------------------------------
+   Information Item
+-------------------------------- */
+
+.item {
+    min-height: 62px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 13px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(100, 110, 180, 0.13);
+    border-radius: 7px;
+
+    background: rgba(255, 255, 255, 0.018);
+
+    transition:
+        border-color 180ms ease,
+        background 180ms ease;
+}
+
+.item:hover {
+    border-color: rgba(125, 105, 190, 0.25);
+
+    background: rgba(255, 255, 255, 0.028);
+}
+
+/* --------------------------------
+   Item Icon
+-------------------------------- */
+
+.itemIcon {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid;
+    border-radius: 8px;
+}
+
+.itemIcon svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Icon Variants */
+
+.purple {
+    color: #c653ff;
+    border-color: rgba(198, 83, 255, 0.30);
+    background: rgba(198, 83, 255, 0.07);
+}
+
+.blue {
+    color: #3c9dff;
+    border-color: rgba(60, 157, 255, 0.30);
+    background: rgba(60, 157, 255, 0.07);
+}
+
+.indigo {
+    color: #716bff;
+    border-color: rgba(113, 107, 255, 0.30);
+    background: rgba(113, 107, 255, 0.07);
+}
+
+.gold {
+    color: #ffb51b;
+    border-color: rgba(255, 181, 27, 0.30);
+    background: rgba(255, 181, 27, 0.07);
+}
+
+.pink {
+    color: #ef5db8;
+    border-color: rgba(239, 93, 184, 0.30);
+    background: rgba(239, 93, 184, 0.07);
+}
+
+.green {
+    color: #35d96b;
+    border-color: rgba(53, 217, 107, 0.30);
+    background: rgba(53, 217, 107, 0.07);
+}
+
+.cyan {
+    color: #3dd4d4;
+    border-color: rgba(61, 212, 212, 0.30);
+    background: rgba(61, 212, 212, 0.07);
+}
+
+.orange {
+    color: #ff9f2f;
+    border-color: rgba(255, 159, 47, 0.30);
+    background: rgba(255, 159, 47, 0.07);
+}
+
+.red {
+    color: #ff6874;
+    border-color: rgba(255, 104, 116, 0.30);
+    background: rgba(255, 104, 116, 0.07);
+}
+
+.slate {
+    color: #a9b0c8;
+    border-color: rgba(169, 176, 200, 0.25);
+    background: rgba(169, 176, 200, 0.06);
+}
+
+/* --------------------------------
+   Item Content
+-------------------------------- */
+
+.itemContent {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.itemContent span {
+    font-size: 10px;
+    line-height: 1.2;
+
+    color: rgba(255, 255, 255, 0.46);
+}
+
+.itemContent strong {
+    overflow: hidden;
+
+    font-size: 12px;
+    line-height: 1.3;
+    font-weight: 500;
+
+    color: rgba(255, 255, 255, 0.88);
+
+    text-overflow: ellipsis;
+}
+
+/* --------------------------------
+   Bottom Note
+-------------------------------- */
+
+.note {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 8px;
+
+    margin-top: 12px;
+    padding: 10px 12px;
+
+    border: 1px solid rgba(255, 181, 27, 0.13);
+    border-radius: 6px;
+
+    background: rgba(255, 181, 27, 0.035);
+}
+
+.note svg {
+    flex-shrink: 0;
+
+    width: 14px;
+    height: 14px;
+
+    margin-top: 1px;
+
+    color: #ffb51b;
+}
+
+.note p {
+    margin: 0;
+
+    font-size: 10px;
+    line-height: 1.45;
+
+    color: rgba(255, 255, 255, 0.52);
+}
+
+/* --------------------------------
+   Tablet
+-------------------------------- */
+
+@media (max-width: 900px) {
+    .container {
+        padding: 0 32px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --------------------------------
+   Mobile
+-------------------------------- */
+
+@media (max-width: 600px) {
+    .container {
+        padding: 0 20px;
+    }
+
+    .header {
+        padding: 15px;
+    }
+
+    .headerContent {
+        gap: 10px;
+    }
+
+    .headerIcon {
+        width: 34px;
+        height: 34px;
+    }
+
+    .headerContent h2 {
+        font-size: 14px;
+    }
+
+    .headerContent p {
+        font-size: 10px;
+    }
+
+    .chevron {
+        width: 29px;
+        height: 29px;
+    }
+
+    .content {
+        padding: 0 15px 15px;
+    }
+
+    .grid {
+        gap: 7px;
+
+        padding-top: 13px;
+    }
+
+    .item {
+        min-height: 58px;
+
+        padding: 9px 10px;
+    }
+
+    .itemIcon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .itemContent strong {
+        font-size: 11px;
+    }
+
+    .note {
+        margin-top: 10px;
+    }
+}

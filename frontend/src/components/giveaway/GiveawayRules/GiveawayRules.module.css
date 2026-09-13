@@ -1,0 +1,424 @@
+.section {
+  padding: 72px 0;
+  background: #030518;
+}
+
+.container {
+  width: 100%;
+  max-width: 1540px;
+  margin: 0 auto;
+  padding: 0 78px;
+}
+
+/* Header */
+
+.header {
+  max-width: 760px;
+  margin: 0 auto 36px;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #a855f7;
+}
+
+.title {
+  margin: 0;
+  color: #ffffff;
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.description {
+  margin: 14px auto 0;
+  max-width: 680px;
+  color: #8f94aa;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Main card */
+
+.rulesCard {
+  max-width: 1100px;
+  margin: 0 auto;
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18, 20, 48, 0.96) 0%,
+      rgba(10, 12, 32, 0.98) 100%
+    );
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+/* Card header */
+
+.rulesHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 24px 26px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.rulesHeader h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.rulesHeader p {
+  margin: 5px 0 0;
+  color: #777d95;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.rulesBadge {
+  flex-shrink: 0;
+
+  padding: 6px 10px;
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 999px;
+
+  background: rgba(168, 85, 247, 0.08);
+
+  color: #b978ff;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Rule item */
+
+.ruleItem {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+}
+
+.ruleItem:last-child {
+  border-bottom: none;
+}
+
+.ruleTrigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 20px 26px;
+
+  border: 0;
+  background: transparent;
+
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  transition:
+    background 180ms ease,
+    padding 180ms ease;
+}
+
+.ruleTrigger:hover {
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.ruleTrigger:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: -2px;
+}
+
+/* Icon */
+
+.icon {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  font-size: 17px;
+}
+
+.iconPurple {
+  color: #b66cff;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.14);
+}
+
+.iconBlue {
+  color: #5ca8ff;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.14);
+}
+
+.iconGreen {
+  color: #45d483;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.14);
+}
+
+.iconOrange {
+  color: #ffae55;
+  background: rgba(249, 115, 22, 0.1);
+  border: 1px solid rgba(249, 115, 22, 0.14);
+}
+
+.iconRed {
+  color: #ff7373;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.14);
+}
+
+/* Heading */
+
+.ruleHeading {
+  min-width: 0;
+  flex: 1;
+}
+
+.ruleHeading span {
+  display: block;
+
+  color: #f4f5fa;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.ruleHeading small {
+  display: block;
+  margin-top: 3px;
+
+  color: #727890;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* Chevron */
+
+.chevron {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+
+  color: #737991;
+
+  transition:
+    transform 220ms ease,
+    color 180ms ease;
+}
+
+.ruleItem.open .ruleTrigger {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.ruleItem.open .chevron {
+  color: #b66cff;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* Content */
+
+.ruleContent {
+  padding: 0 26px 22px 80px;
+}
+
+.ruleContent ul {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.ruleContent li {
+  position: relative;
+
+  margin: 0;
+  padding: 6px 0 6px 18px;
+
+  color: #969bb0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.ruleContent li::before {
+  content: "";
+
+  position: absolute;
+  top: 14px;
+  left: 0;
+
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+  background: #a855f7;
+}
+
+/* Policy note */
+
+.policyNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+
+  margin: 0 26px 24px;
+  padding: 14px 16px;
+
+  border: 1px solid rgba(168, 85, 247, 0.12);
+  border-radius: 10px;
+
+  background: rgba(168, 85, 247, 0.045);
+}
+
+.policyNote svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+
+  color: #a855f7;
+  font-size: 15px;
+}
+
+.policyNote p {
+  margin: 0;
+
+  color: #777d95;
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.policyNote strong {
+  color: #aeb3c6;
+  font-weight: 600;
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+  .container {
+    padding: 0 32px;
+  }
+
+  .rulesHeader {
+    padding: 22px;
+  }
+
+  .ruleTrigger {
+    padding: 18px 22px;
+  }
+
+  .ruleContent {
+    padding: 0 22px 20px 76px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .section {
+    padding: 56px 0;
+  }
+
+  .container {
+    padding: 0 18px;
+  }
+
+  .header {
+    margin-bottom: 26px;
+  }
+
+  .title {
+    font-size: 27px;
+  }
+
+  .description {
+    font-size: 13px;
+  }
+
+  .rulesCard {
+    border-radius: 13px;
+  }
+
+  .rulesHeader {
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .rulesHeader h3 {
+    font-size: 15px;
+  }
+
+  .rulesHeader p {
+    font-size: 11px;
+  }
+
+  .rulesBadge {
+    display: none;
+  }
+
+  .ruleTrigger {
+    gap: 12px;
+    padding: 17px 18px;
+  }
+
+  .icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    font-size: 15px;
+  }
+
+  .ruleHeading span {
+    font-size: 13px;
+  }
+
+  .ruleHeading small {
+    font-size: 10px;
+  }
+
+  .ruleContent {
+    padding: 0 18px 18px 64px;
+  }
+
+  .ruleContent li {
+    padding-left: 15px;
+    font-size: 11px;
+  }
+
+  .ruleContent li::before {
+    top: 13px;
+    width: 4px;
+    height: 4px;
+  }
+
+  .policyNote {
+    margin: 0 18px 18px;
+    padding: 12px 13px;
+  }
+}
