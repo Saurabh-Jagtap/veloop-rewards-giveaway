@@ -330,6 +330,21 @@
         0 4px 12px rgba(85, 38, 255, 0.22);
 }
 
+.userName {
+    color: #e9e9ef;
+
+    font-family:
+        "Poppins",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    white-space: nowrap;
+}
+
 /* =========================================
    RESPONSIVE
 ========================================= */

@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiGift, FiUser } from "react-icons/fi";
 import { useEffect, useRef, useState } from "react";
 
 import styles from "./Navbar.module.css";
+import { useAuth } from "../../../context/AuthContext";
 
 type NavItem = {
   label: string;
@@ -37,6 +38,9 @@ const navItems: NavItem[] = [
 ];
 
 function Navbar() {
+  const navigate = useNavigate();
+const { user, isAuthenticated, logout } = useAuth();
+
   const [activeNav, setActiveNav] = useState("Giveaways");
 
   const navRef = useRef<HTMLElement | null>(null);
@@ -94,7 +98,13 @@ function Navbar() {
                   ? styles.active
                   : ""
                   }`}
-                onClick={() => setActiveNav(item.label)}
+                onClick={(event) => {
+  event.preventDefault();
+
+  setActiveNav(item.label);
+
+  navigate(`/giveaway${item.href}`);
+}}
               >
                 {item.label}
               </a>
@@ -112,25 +122,50 @@ function Navbar() {
 
           {/* Actions */}
           <div className={styles.actions}>
-            <button
-              type="button"
-              className={styles.loginButton}
-            >
-              <FiUser
-                size={18}
-                strokeWidth={1.8}
-              />
+  {isAuthenticated ? (
+    <>
+      <span className={styles.userName}>
+        Hi, {user?.name}
+      </span>
 
-              <span>Login</span>
-            </button>
+      <button
+        type="button"
+        className={styles.loginButton}
+        onClick={() => void logout()}
+      >
+        <FiUser
+          size={18}
+          strokeWidth={1.8}
+        />
 
-            <button
-              type="button"
-              className={styles.getStartedButton}
-            >
-              Get Started
-            </button>
-          </div>
+        <span>Logout</span>
+      </button>
+    </>
+  ) : (
+    <>
+      <button
+        type="button"
+        className={styles.loginButton}
+        onClick={() => navigate("/login")}
+      >
+        <FiUser
+          size={18}
+          strokeWidth={1.8}
+        />
+
+        <span>Login</span>
+      </button>
+
+      <button
+        type="button"
+        className={styles.getStartedButton}
+        onClick={() => navigate("/register")}
+      >
+        Get Started
+      </button>
+    </>
+  )}
+</div>
         </div>
       </div>
     </header>

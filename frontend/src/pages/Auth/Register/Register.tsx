@@ -7,7 +7,7 @@ import { ApiError } from "../../../api/apiClient";
 import { AuthLayout } from "../../../components/auth/AuthLayout/AuthLayout";
 import { authService } from "../../../services/auth.services";
 import styles from "./Register.module.css";
-import { useAuth } from "../../../context/Authcontext";
+import { useAuth } from "../../../context/AuthContext";
 
 export function Register() {
     const navigate = useNavigate();

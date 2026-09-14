@@ -7,7 +7,7 @@ import { AuthLayout } from "../../../components/auth/AuthLayout/AuthLayout";
 import { ApiError } from "../../../api/apiClient";
 import { authService } from "../../../services/auth.services";
 import styles from "./Login.module.css";
-import { useAuth } from "../../../context/Authcontext";
+import { useAuth } from "../../../context/AuthContext";
 
 export function Login() {
   const navigate = useNavigate();
