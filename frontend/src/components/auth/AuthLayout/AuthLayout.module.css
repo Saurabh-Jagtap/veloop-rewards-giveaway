@@ -1,0 +1,193 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px 20px;
+
+  background: #030518;
+}
+
+.backgroundGlow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background: rgba(168, 85, 247, 0.08);
+  filter: blur(100px);
+
+  pointer-events: none;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 430px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Logo */
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-bottom: 28px;
+
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.logoMark {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: linear-gradient(135deg, #a855f7, #c653ff);
+
+  color: #ffffff;
+
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.logoText {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* Card */
+
+.card {
+  width: 100%;
+
+  padding: 32px;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+
+  background: rgba(13, 16, 40, 0.94);
+
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+
+  backdrop-filter: blur(14px);
+}
+
+/* Header */
+
+.header {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 25px;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.header p {
+  margin: 9px 0 0;
+
+  color: #858ba2;
+
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* Footer */
+
+.footer {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+
+  margin-top: 24px;
+
+  color: #777d95;
+
+  font-size: 11px;
+}
+
+.footer a {
+  color: #b66cff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #c985ff;
+}
+
+.footer a:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Terms */
+
+.terms {
+  margin: 18px 0 0;
+
+  color: #565c72;
+
+  font-size: 10px;
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+/* Mobile */
+
+@media (max-width: 480px) {
+  .page {
+    padding: 28px 16px;
+  }
+
+  .logo {
+    margin-bottom: 22px;
+  }
+
+  .card {
+    padding: 25px 20px;
+  }
+
+  .header {
+    margin-bottom: 24px;
+  }
+
+  .header h1 {
+    font-size: 23px;
+  }
+}
