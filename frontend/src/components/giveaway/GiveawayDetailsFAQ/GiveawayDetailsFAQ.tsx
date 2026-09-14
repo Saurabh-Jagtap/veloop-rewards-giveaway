@@ -14,7 +14,7 @@ interface FAQItem {
     answer: string;
 }
 
-const getFAQs = (giveaway: Giveaway): FAQItem[] => [
+const getFAQs = (): FAQItem[] => [
     {
         id: "multiple-entries",
         question: "Can I join this giveaway more than once?",
@@ -44,9 +44,10 @@ const getFAQs = (giveaway: Giveaway): FAQItem[] => [
 export function GiveawayDetailsFAQ({
     giveaway,
 }: GiveawayDetailsFAQProps) {
+    void giveaway;
     const [openId, setOpenId] = useState<string | null>(null);
 
-    const faqs = getFAQs(giveaway);
+    const faqs = getFAQs();
 
     const toggleFAQ = (id: string) => {
         setOpenId((current) => (current === id ? null : id));
